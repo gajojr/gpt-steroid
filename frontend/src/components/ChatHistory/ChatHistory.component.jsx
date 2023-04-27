@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	ChatHistoryWrapper,
 	ChatList,
@@ -11,6 +12,7 @@ import {
 	AddNewChatBtn,
 	PlusIcon
 } from './ChatHistory.style';
+import { selectChatId } from '../../redux/reducers/Chat';
 
 const mockChats = [
 	{
@@ -28,6 +30,8 @@ const mockChats = [
 ]
 
 const ChatHistory = () => {
+	const dispatch = useDispatch();
+
 	return (
 		<ChatHistoryWrapper>
 			<AddNewChatBtn>
@@ -38,7 +42,7 @@ const ChatHistory = () => {
 				{
 					mockChats.map(chat => {
 						return (
-							<ItemWrapper key={chat.id}>
+							<ItemWrapper key={chat.id} onClick={() => dispatch(selectChatId(chat.id))}>
 								<ChatIcon />
 								<ChatName>{chat.name}</ChatName>
 								<PencilIcon />

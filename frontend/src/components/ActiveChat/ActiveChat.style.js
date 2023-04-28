@@ -45,7 +45,7 @@ export const EditQuestion = styled.div`
 	flex-direction: row;
 	justify-content: space-around;
 	align-self: center;
-	width: 200px;
+	width: 150px;
 	background-color: #434654;
 	padding: 10px;
 	margin-top: 20px;

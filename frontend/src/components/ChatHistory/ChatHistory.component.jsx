@@ -10,24 +10,24 @@ import {
 	PencilIcon,
 	TrashIcon,
 	AddNewChatBtn,
-	PlusIcon
+	PlusIcon,
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
 
 const mockChats = [
 	{
 		id: 1,
-		name: 'random chat 1413431423 dfdsa'
+		name: 'random chat 1413431423 dfdsa',
 	},
 	{
 		id: 2,
-		name: 'random chat'
+		name: 'random chat',
 	},
 	{
 		id: 3,
-		name: 'random chat'
+		name: 'random chat',
 	},
-]
+];
 
 const ChatHistory = () => {
 	const dispatch = useDispatch();
@@ -36,24 +36,26 @@ const ChatHistory = () => {
 		<ChatHistoryWrapper>
 			<AddNewChatBtn>
 				<PlusIcon />
+				<span>New chat</span>
 			</AddNewChatBtn>
 			<SectionTitle>Chat History</SectionTitle>
 			<ChatList>
-				{
-					mockChats.map(chat => {
-						return (
-							<ItemWrapper key={chat.id} onClick={() => dispatch(selectChatId(chat.id))}>
-								<ChatIcon />
-								<ChatName>{chat.name}</ChatName>
-								<PencilIcon />
-								<TrashIcon />
-							</ItemWrapper>
-						)
-					})
-				}
+				{mockChats.map((chat) => {
+					return (
+						<ItemWrapper
+							key={chat.id}
+							onClick={() => dispatch(selectChatId(chat.id))}
+						>
+							<ChatIcon />
+							<ChatName>{chat.name}</ChatName>
+							<PencilIcon />
+							<TrashIcon />
+						</ItemWrapper>
+					);
+				})}
 			</ChatList>
 		</ChatHistoryWrapper>
 	);
-}
+};
 
 export default ChatHistory;

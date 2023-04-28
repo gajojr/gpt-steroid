@@ -13,16 +13,26 @@ export const ChatHistoryWrapper = styled.div`
 	padding: 15px;
 `;
 
-export const SectionTitle = styled.h2``;
+export const SectionTitle = styled.h2`
+	margin-block-end: 0;
+`;
 
 export const AddNewChatBtn = styled.button`
 	width: 100%;
-	border-radius: 12px;
+	border-radius: 10px;
 	border: none;
-	padding: 5px 0;
+	padding: 12px 15px;
+	background-color: #202123;
+	border: 1px solid #4d4d4f;
+	color: #fff;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	transition: 0.4s background-color;
 
 	&:hover {
 		cursor: pointer;
+		background-color: #525050;
 	}
 `;
 
@@ -31,6 +41,9 @@ export const ChatList = styled.ul`
 	list-style-type: none;
 	width: 100%;
 	padding-inline-start: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 export const ItemWrapper = styled.li`
@@ -39,6 +52,12 @@ export const ItemWrapper = styled.li`
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+	padding: 10px 7px;
+	border-radius: 7px;
+
+	&:hover {
+		background-color: #525050;
+	}
 `;
 
 export const ChatName = styled.h4`
@@ -46,6 +65,9 @@ export const ChatName = styled.h4`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	margin-block-start: 0;
+	margin-block-end: 0;
+	font-weight: 400;
 
 	&:hover {
 		cursor: pointer;
@@ -53,7 +75,7 @@ export const ChatName = styled.h4`
 `;
 
 const iconStyle = css`
-	font-size: 24px;
+	font-size: 18px;
 
 	&:hover {
 		cursor: pointer;
@@ -78,5 +100,5 @@ export const TrashIcon = styled(BsTrash3)`
 
 export const PlusIcon = styled(GoPlus)`
 	${iconStyle};
-	font-size: 32px;
+	margin-right: 15px;
 `;

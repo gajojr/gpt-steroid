@@ -3,9 +3,9 @@ import Dexie from 'dexie';
 const db = new Dexie('GPT-tunner');
 
 db.version(1).stores({
-    chats: '++id, name, creationDate',
-    fileUploads: '++id, fileId, fileName, uploadDate',
-    messages: '++id, chatId, messageId, creationDate, messageType',
+	chats: '++id, name, creationDate',
+	fileUploads: '++id, fileName, uploadDate',
+	messages: '++id, chatId, creationDate, messageType, messageContent',
 });
 
 export default db;

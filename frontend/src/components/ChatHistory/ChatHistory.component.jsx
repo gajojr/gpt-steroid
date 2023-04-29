@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import {
@@ -12,6 +12,7 @@ import {
 	TrashIcon,
 	AddNewChatBtn,
 	PlusIcon,
+	TickIcon,
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
 import db from '../../db';
@@ -34,10 +35,21 @@ const mockChats = [
 const ChatHistory = () => {
 	const dispatch = useDispatch();
 	const [chats, setChats] = useState([]);
+	const [editable, setEditable] = useState(false);
+	const [editableChatId, setEditableChatId] = useState(null);
+	const [editableChatName, setEditableChatName] = useState('');
+	const [shouldBlur, setShouldBlur] = useState(true);
+	const chatNameRef = useRef(null);
 
 	useEffect(() => {
 		db.chats.toArray().then((chats) => setChats(chats));
 	}, []);
+
+	useEffect(() => {
+		if (editable && chatNameRef.current) {
+			chatNameRef.current.focus();
+		}
+	}, [editable]);
 
 	const handleAddChatClick = () => {
 		Swal.fire({
@@ -109,8 +121,41 @@ const ChatHistory = () => {
 							onClick={() => dispatch(selectChatId(chat.id))}
 						>
 							<ChatIcon />
-							<ChatName>{chat.name}</ChatName>
-							<PencilIcon />
+							<ChatName
+								ref={chatNameRef}
+								contentEditable={editable && chat.id === editableChatId}
+								suppressContentEditableWarning={true}
+								onInput={(e) => setEditableChatName(e.target.innerText)}
+								onBlur={() => {
+									if (shouldBlur) {
+										setTimeout(() => {
+											setEditable(false);
+											setEditableChatId(null);
+										}, 0);
+									}
+									setShouldBlur(true);
+								}}
+							>
+								{chat.name}
+							</ChatName>
+							{editable && chat.id === editableChatId ? (
+								<TickIcon
+									onClick={async () => {
+										await db.chats.update(chat.id, { name: editableChatName });
+										setEditable(false);
+										setEditableChatId(null);
+										setEditableChatName('');
+									}}
+									onMouseDown={() => setShouldBlur(false)}
+								/>
+							) : (
+								<PencilIcon
+									onClick={() => {
+										setEditable(true);
+										setEditableChatId(chat.id);
+									}}
+								/>
+							)}
 							<TrashIcon onClick={() => handleRemoveChatClick(chat.id)} />
 						</ItemWrapper>
 					);

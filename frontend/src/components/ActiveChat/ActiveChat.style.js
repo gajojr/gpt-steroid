@@ -39,6 +39,7 @@ export const AnswerMessage = styled.article`
 export const MessageContent = styled.div`
 	width: 80%;
 	text-align: center;
+	font-size: 14px;
 `;
 
 export const EditQuestion = styled.div`

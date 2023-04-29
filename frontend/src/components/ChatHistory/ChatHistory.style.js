@@ -3,9 +3,10 @@ import { MdOutlineChatBubbleOutline } from 'react-icons/md';
 import { TbPencilMinus } from 'react-icons/tb';
 import { BsTrash3 } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
+import { TiTick } from 'react-icons/ti';
 
 export const ChatHistoryWrapper = styled.div`
-	width: 280px;
+	width: 320px;
 	height: 100vh;
 	background-color: #202123;
 	color: #fff;
@@ -68,6 +69,9 @@ export const ChatName = styled.h4`
 	margin-block-start: 0;
 	margin-block-end: 0;
 	font-weight: 400;
+	border: ${({ contentEditable }) =>
+		contentEditable ? '1px solid white' : 'none'};
+	border-radius: 5px;
 
 	&:hover {
 		cursor: pointer;
@@ -76,9 +80,11 @@ export const ChatName = styled.h4`
 
 const iconStyle = css`
 	font-size: 18px;
+	color: #c5c5d2;
 
 	&:hover {
 		cursor: pointer;
+		color: #fff;
 	}
 `;
 
@@ -101,4 +107,8 @@ export const TrashIcon = styled(BsTrash3)`
 export const PlusIcon = styled(GoPlus)`
 	${iconStyle};
 	margin-right: 15px;
+`;
+
+export const TickIcon = styled(TiTick)`
+	${iconStyle};
 `;

@@ -3,7 +3,7 @@ import { TbPencilMinus, TbSend } from 'react-icons/tb';
 
 export const ActiveChatWrapper = styled.section`
 	width: 100%;
-	height: 100vh;
+	min-height: 100vh;
 	background-color: #343541;
 	display: flex;
 	flex-direction: column;
@@ -28,6 +28,7 @@ const messageStyle = css`
 export const QuestionMessage = styled.article`
 	${messageStyle};
 	background-color: #343541;
+	align-items: center;
 	flex-direction: column;
 `;
 
@@ -39,7 +40,7 @@ export const AnswerMessage = styled.article`
 export const MessageContent = styled.div`
 	width: 80%;
 	text-align: center;
-	font-size: 14px;
+	font-size: 15px;
 `;
 
 export const EditQuestion = styled.div`
@@ -47,24 +48,26 @@ export const EditQuestion = styled.div`
 	flex-direction: row;
 	justify-content: space-around;
 	align-self: center;
-	width: 180px;
+	width: 150px;
 	background-color: #434654;
 	padding: 10px;
 	margin-top: 20px;
 	border-radius: 12px;
 	border: 1px solid #fff;
+	transition: 0.5s background-color;
 
 	&:hover {
 		cursor: pointer;
+		background-color: #202123;
 	}
 `;
 
 export const EditQuestionText = styled.span`
-	font-size: 1.2rem;
+	font-size: 0.9rem;
 `;
 
 export const EditQuestionBtn = styled(TbPencilMinus)`
-	font-size: 24px;
+	font-size: 18px;
 `;
 
 export const NewQuestionInputWrapper = styled.div`
@@ -75,23 +78,49 @@ export const NewQuestionInputWrapper = styled.div`
 	background-color: #40414f;
 	padding: 15px;
 	border-radius: 10px;
+	box-shadow: 0 0 transparent, 0 0 transparent, 0 0 15px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 transparent, 0 0 transparent, 0 0 15px #0000001a;
+	border: 0.5px solid #000;
+	margin-bottom: 20px;
 `;
 
 export const NewQuestionInput = styled.textarea`
-	width: 94%;
+	width: 97%;
 	background-color: transparent;
 	border: none;
 	resize: none;
 	color: #fff;
 	font-size: 1rem;
 	font-family: 'Inter', sans-serif;
+	max-height: 220px;
+	outline: none;
+
+	&::placeholder {
+		/* Chrome, Firefox, Opera, Safari 10.1+ */
+		color: #8e8e9f;
+	}
+
+	&:-ms-input-placeholder {
+		/* Internet Explorer 10-11 */
+		color: #8e8e9f;
+	}
+
+	&::-ms-input-placeholder {
+		/* Microsoft Edge */
+		color: #8e8e9f;
+	}
 `;
 
 export const SubmitQuestionIcon = styled(TbSend)`
 	font-size: 24px;
-	align-self: center;
+	align-self: end;
+	box-sizing: content-box;
 
 	&:hover {
 		cursor: pointer;
+		background-color: ${(props) =>
+			props.enableBackground ? '#202123' : 'none'};
+		border-radius: ${(props) => (props.enableBackground ? '5px' : '')};
+		padding: ${(props) => (props.enableBackground ? '2px' : '')};
 	}
 `;

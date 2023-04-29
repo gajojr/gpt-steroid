@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import db from '../../db';
 import messages from '../../mocks/messages';
 import {
@@ -16,6 +16,7 @@ import {
 } from './ActiveChat.style';
 
 const ActiveChat = ({ chatId }) => {
+	const textareaRef = useRef(null);
 	const [currentPromt, setCurrentPromt] = useState('');
 	// const [messages, setMessages] = useState([]);
 
@@ -49,16 +50,22 @@ const ActiveChat = ({ chatId }) => {
 					)
 				)}
 			</MessagesList>
-			<NewQuestionInputWrapper>
+			<NewQuestionInputWrapper
+				style={{ top: `${-(textareaRef.current.style.height / 3)}px` }}
+			>
 				<NewQuestionInput
+					ref={textareaRef}
+					placeholder='Send a message.'
 					value={currentPromt}
 					onChange={(e) => {
-						console.log(e.target.value);
 						setCurrentPromt(e.target.value);
+						textareaRef.current.style.height = 'auto';
+						textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
 					}}
 				/>
 				<SubmitQuestionIcon
 					color={currentPromt.length ? '#8E8E9F' : '#5F606F'}
+					enableBackground={currentPromt.length}
 				/>
 			</NewQuestionInputWrapper>
 		</ActiveChatWrapper>

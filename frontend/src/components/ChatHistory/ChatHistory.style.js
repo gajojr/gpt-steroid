@@ -1,9 +1,9 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { GoPlus } from 'react-icons/go';
 
 export const ChatHistoryWrapper = styled.div`
 	width: 320px;
-	height: 100vh;
+	min-height: 100vh;
 	background-color: #202123;
 	color: #fff;
 	font-family: 'Inter', sans-serif;

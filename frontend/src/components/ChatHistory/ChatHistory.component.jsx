@@ -1,18 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import {
 	ChatHistoryWrapper,
 	ChatList,
 	SectionTitle,
-	ItemWrapper,
-	ChatName,
-	ChatIcon,
-	PencilIcon,
-	TrashIcon,
 	AddNewChatBtn,
 	PlusIcon,
-	TickIcon,
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
 import db from '../../db';

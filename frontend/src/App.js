@@ -4,6 +4,7 @@ import StarterScreen from './components/StarterScreen/StarterScreen.component';
 import './App.css';
 import { useSelector } from 'react-redux';
 import ActiveChat from './components/ActiveChat/ActiveChat.component';
+import Footer from './components/Footer/Footer.component';
 
 function App() {
 	const activeChatId = useSelector((state) => state.chat.currentChatId);
@@ -18,7 +19,7 @@ function App() {
 					<StarterScreen />
 				)}
 			</main>
-			<footer></footer>
+			<Footer />
 		</>
 	);
 }

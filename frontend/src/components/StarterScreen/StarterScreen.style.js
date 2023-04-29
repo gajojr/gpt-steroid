@@ -4,6 +4,7 @@ export const StarterScreenWrapper = styled.div`
 	width: 100%;
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	background-color: #343541;
@@ -11,6 +12,7 @@ export const StarterScreenWrapper = styled.div`
 
 export const Title = styled.h1`
 	color: #555869;
+	margin-block-end: 0;
 `;
 
 export const Subtitle = styled.span`
@@ -23,4 +25,14 @@ export const Subtitle = styled.span`
 	position: relative;
 	top: -10px;
 	left: 5px;
+`;
+
+export const FeaturesList = styled.ol`
+	padding-inline-start: 0;
+`;
+
+export const Feature = styled.li`
+	color: #fff;
+	font-size: 1.1rem;
+	margin-top: 5px;
 `;

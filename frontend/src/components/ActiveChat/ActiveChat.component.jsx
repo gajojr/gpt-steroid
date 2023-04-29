@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import db from '../../db';
-import messages from '../../mocks/messages';
+// import messages from '../../mocks/messages';
 import {
 	ActiveChatWrapper,
 	AnswerMessage,
@@ -18,18 +18,18 @@ import {
 const ActiveChat = ({ chatId }) => {
 	const textareaRef = useRef(null);
 	const [currentPromt, setCurrentPromt] = useState('');
-	// const [messages, setMessages] = useState([]);
+	const [messages, setMessages] = useState([]);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		const messages = await db.messages
-	// 			.where('chatId')
-	// 			.equals(chatId)
-	// 			.toArray();
+	useEffect(() => {
+		(async () => {
+			const messages = await db.messages
+				.where('chatId')
+				.equals(chatId)
+				.toArray();
 
-	// 		setMessages(messages);
-	// 	})();
-	// }, [chatId]);
+			setMessages(messages);
+		})();
+	}, [chatId]);
 
 	return (
 		<ActiveChatWrapper>
@@ -50,9 +50,7 @@ const ActiveChat = ({ chatId }) => {
 					)
 				)}
 			</MessagesList>
-			<NewQuestionInputWrapper
-				style={{ top: `${-(textareaRef.current.style.height / 3)}px` }}
-			>
+			<NewQuestionInputWrapper>
 				<NewQuestionInput
 					ref={textareaRef}
 					placeholder='Send a message.'

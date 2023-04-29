@@ -15,6 +15,7 @@
     "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.10",
+    "sweetalert2": "^11.7.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

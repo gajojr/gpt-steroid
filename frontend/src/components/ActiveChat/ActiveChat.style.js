@@ -14,6 +14,7 @@ export const MessagesList = styled.ul`
 	padding-inline-start: 0;
 	margin-block-start: 0;
 	margin-block-end: 0;
+	width: 100%;
 `;
 
 const messageStyle = css`
@@ -45,7 +46,7 @@ export const EditQuestion = styled.div`
 	flex-direction: row;
 	justify-content: space-around;
 	align-self: center;
-	width: 150px;
+	width: 180px;
 	background-color: #434654;
 	padding: 10px;
 	margin-top: 20px;

@@ -5,7 +5,7 @@ import { BsTrash3 } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
 
 export const ChatHistoryWrapper = styled.div`
-	width: 250px;
+	width: 280px;
 	height: 100vh;
 	background-color: #202123;
 	color: #fff;

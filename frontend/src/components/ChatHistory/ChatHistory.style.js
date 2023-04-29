@@ -1,9 +1,5 @@
 import styled, { css } from 'styled-components';
-import { MdOutlineChatBubbleOutline } from 'react-icons/md';
-import { TbPencilMinus } from 'react-icons/tb';
-import { BsTrash3 } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
-import { TiTick } from 'react-icons/ti';
 
 export const ChatHistoryWrapper = styled.div`
 	width: 320px;
@@ -78,7 +74,8 @@ export const ChatName = styled.h4`
 	}
 `;
 
-const iconStyle = css`
+export const PlusIcon = styled(GoPlus)`
+	margin-right: 15px;
 	font-size: 18px;
 	color: #c5c5d2;
 
@@ -86,29 +83,4 @@ const iconStyle = css`
 		cursor: pointer;
 		color: #fff;
 	}
-`;
-
-export const ChatIcon = styled(MdOutlineChatBubbleOutline)`
-	${iconStyle};
-
-	&:hover {
-		cursor: auto;
-	}
-`;
-
-export const PencilIcon = styled(TbPencilMinus)`
-	${iconStyle};
-`;
-
-export const TrashIcon = styled(BsTrash3)`
-	${iconStyle};
-`;
-
-export const PlusIcon = styled(GoPlus)`
-	${iconStyle};
-	margin-right: 15px;
-`;
-
-export const TickIcon = styled(TiTick)`
-	${iconStyle};
 `;

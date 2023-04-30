@@ -31,10 +31,23 @@ const ActiveChat = ({ chatId }) => {
 		})();
 	}, [chatId]);
 
+	const addNewQuestion = async () => {
+		await db.messages.add({
+			chatId,
+			creationDate: new Date(),
+			messageType: 'question',
+			messageContent: currentPromt,
+		});
+
+		const messages = await db.messages.where('chatId').equals(chatId).toArray();
+
+		setMessages(messages);
+	};
+
 	return (
 		<ActiveChatWrapper>
 			<MessagesList>
-				{messages.map((message, idx) =>
+				{messages.map((message) =>
 					message.messageType === 'question' ? (
 						<QuestionMessage key={message.id}>
 							<MessageContent>{message.messageContent}</MessageContent>
@@ -60,10 +73,20 @@ const ActiveChat = ({ chatId }) => {
 						textareaRef.current.style.height = 'auto';
 						textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
 					}}
+					onKeyDown={(e) => {
+						if (e.keyCode === 13 && !e.shiftKey) {
+							addNewQuestion();
+						}
+					}}
 				/>
 				<SubmitQuestionIcon
 					color={currentPromt.length ? '#8E8E9F' : '#5F606F'}
 					enableBackground={currentPromt.length}
+					onClick={() => {
+						if (currentPromt.length) {
+							addNewQuestion();
+						}
+					}}
 				/>
 			</NewQuestionInputWrapper>
 		</ActiveChatWrapper>

@@ -43,11 +43,7 @@ const ChatItem = ({ chat, setChats, chats }) => {
 				await db.chats.where({ id: chatId }).delete();
 				await db.messages.where({ chatId: chatId }).delete();
 				setChats(chats.filter((chat) => chat.id !== chatId));
-				Swal.fire(
-					'Deleted!',
-					'Chat and associated messages have been deleted.',
-					'success'
-				);
+				window.location.reload();
 			}
 		} catch (err) {
 			console.error(err);

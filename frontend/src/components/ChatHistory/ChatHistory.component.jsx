@@ -42,6 +42,7 @@ const ChatHistory = () => {
 					creationDate: new Date(),
 				});
 				dispatch(selectChatId(chatId));
+				db.chats.toArray().then((chats) => setChats(chats));
 			}
 		});
 	};

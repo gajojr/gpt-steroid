@@ -74,7 +74,7 @@ export const NewQuestionInputWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-top: 40px;
-	width: 60%;
+	width: 54%;
 	background-color: #40414f;
 	padding: 15px;
 	border-radius: 10px;
@@ -82,6 +82,8 @@ export const NewQuestionInputWrapper = styled.div`
 	box-shadow: 0 0 transparent, 0 0 transparent, 0 0 15px #0000001a;
 	border: 0.5px solid #000;
 	margin-bottom: 20px;
+	position: fixed;
+	bottom: 50px;
 `;
 
 export const NewQuestionInput = styled.textarea`
@@ -92,7 +94,7 @@ export const NewQuestionInput = styled.textarea`
 	color: #fff;
 	font-size: 1rem;
 	font-family: 'Inter', sans-serif;
-	max-height: 220px;
+	max-height: 200px;
 	outline: none;
 
 	&::placeholder {

@@ -14,6 +14,7 @@ import {
 	NewQuestionInput,
 	SubmitQuestionIcon,
 } from './ActiveChat.style';
+import askQuestion from '../../chat/askQuestion';
 
 const ActiveChat = ({ chatId }) => {
 	const textareaRef = useRef(null);
@@ -40,8 +41,24 @@ const ActiveChat = ({ chatId }) => {
 		});
 
 		const messages = await db.messages.where('chatId').equals(chatId).toArray();
-
 		setMessages(messages);
+
+		const answer = await askQuestion(currentPromt);
+		await db.messages.add({
+			chatId,
+			creationDate: new Date(),
+			messageType: 'answer',
+			messageContent: answer,
+		});
+
+		const newMessages = await db.messages
+			.where('chatId')
+			.equals(chatId)
+			.toArray();
+		console.log(newMessages);
+		setMessages(newMessages);
+
+		setCurrentPromt('');
 	};
 
 	return (

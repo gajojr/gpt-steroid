@@ -17,10 +17,7 @@ const StarterScreen = () => {
 			<FeaturesList>
 				<Feature>Bigger input and output (up to 32K tokens)</Feature>
 				<Feature>File uploads (fine tunning)</Feature>
-				<Feature>Follow up questions (chat prompts itself)</Feature>
-				<Feature>Internet search</Feature>
-				<Feature>File system analyzer</Feature>
-				<Feature>Open source code</Feature>
+				<Feature>Open source</Feature>
 				<Feature>Local setup</Feature>
 			</FeaturesList>
 		</StarterScreenWrapper>

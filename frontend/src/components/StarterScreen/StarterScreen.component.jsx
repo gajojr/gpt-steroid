@@ -16,7 +16,7 @@ const StarterScreen = () => {
 			</Title>
 			<FeaturesList>
 				<Feature>Bigger input and output (up to 32K tokens)</Feature>
-				<Feature>File uploads (fine tunning)</Feature>
+				<Feature>File uploads (fine tuning)</Feature>
 				<Feature>Open source</Feature>
 				<Feature>Local setup</Feature>
 			</FeaturesList>

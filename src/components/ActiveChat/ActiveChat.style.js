@@ -3,8 +3,8 @@ import { TbPencilMinus, TbSend } from 'react-icons/tb';
 
 export const ActiveChatWrapper = styled.section`
 	width: 100%;
-	min-height: 100vh;
-	overflow: scroll;
+	max-height: 100vh;
+	overflow-y: scroll;
 	background-color: #343541;
 	display: flex;
 	flex-direction: column;

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { TbPencilMinus, TbSend } from 'react-icons/tb';
 import { MdContentCopy } from 'react-icons/md';
 import { TiTick } from 'react-icons/ti';
+import { AiOutlineArrowDown } from 'react-icons/ai';
 
 export const ActiveChatWrapper = styled.section`
 	width: 100%;
@@ -181,5 +182,21 @@ export const TickIcon = styled(TiTick)`
 		cursor: auto;
 		padding: 0;
 		border-radius: 0;
+	}
+`;
+
+export const DownArrow = styled(AiOutlineArrowDown)`
+	color: #acacbd;
+	background-color: #202123;
+	font-size: 30px;
+	padding: 5px;
+	border-radius: 50%;
+	position: fixed;
+	bottom: 150px;
+	right: 20px;
+
+	&:hover {
+		cursor: pointer;
+		color: #fff;
 	}
 `;

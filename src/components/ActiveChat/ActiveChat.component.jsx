@@ -17,6 +17,7 @@ import {
 	TickIcon,
 	ProfileAndText,
 	ProfileImg,
+	DownArrow,
 } from './ActiveChat.style';
 import askQuestion from '../../chat/askQuestion';
 
@@ -27,6 +28,7 @@ const ActiveChat = ({ chatId }) => {
 	const [messages, setMessages] = useState([]);
 	const [showTick, setShowTick] = useState(false);
 	const [copiedMessageId, setCopiedMessageId] = useState(null);
+	const [isAtChatEnd, setIsAtChatEnd] = useState(true);
 
 	const copyToClipboard = (message) => {
 		navigator.clipboard.writeText(message.messageContent);
@@ -38,12 +40,19 @@ const ActiveChat = ({ chatId }) => {
 		}, 2000);
 	};
 
-	// useEffect(() => {
-	// 	if (showTick) {
-	// 		const timer = setTimeout(() => setShowTick(false), 2000);
-	// 		return () => clearTimeout(timer);
-	// 	}
-	// }, [showTick]);
+	useEffect(() => {
+		const chatSection = activeChatRef.current;
+		const handleScroll = () => {
+			setIsAtChatEnd(
+				chatSection.scrollHeight - chatSection.scrollTop ===
+					chatSection.clientHeight
+			);
+		};
+		chatSection.addEventListener('scroll', handleScroll);
+		return () => {
+			chatSection.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	useEffect(() => {
 		// scroll to the bottom of the chat after every message
@@ -88,6 +97,13 @@ const ActiveChat = ({ chatId }) => {
 			.toArray();
 		console.log(newMessages);
 		setMessages(newMessages);
+	};
+
+	const handleScrollDown = () => {
+		activeChatRef.current.scrollTo({
+			top: activeChatRef.current.scrollHeight,
+			behavior: 'smooth',
+		});
 	};
 
 	return (
@@ -155,6 +171,7 @@ const ActiveChat = ({ chatId }) => {
 					}}
 				/>
 			</NewQuestionInputWrapper>
+			{!isAtChatEnd && <DownArrow onClick={handleScrollDown} />}
 		</ActiveChatWrapper>
 	);
 };

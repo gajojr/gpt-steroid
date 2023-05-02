@@ -15,6 +15,8 @@ import {
 	SubmitQuestionIcon,
 	CopyIcon,
 	TickIcon,
+	ProfileAndText,
+	ProfileImg,
 } from './ActiveChat.style';
 import askQuestion from '../../chat/askQuestion';
 
@@ -94,7 +96,13 @@ const ActiveChat = ({ chatId }) => {
 				{messages.map((message) =>
 					message.messageType === 'question' ? (
 						<QuestionMessage key={message.id}>
-							<MessageContent>{message.messageContent}</MessageContent>
+							<ProfileAndText>
+								<ProfileImg
+									src='/user-profile.jpeg'
+									alt='user profile'
+								/>
+								<MessageContent>{message.messageContent}</MessageContent>
+							</ProfileAndText>
 							<EditQuestion>
 								<EditQuestionText>Edit question</EditQuestionText>
 								<EditQuestionBtn />
@@ -102,7 +110,13 @@ const ActiveChat = ({ chatId }) => {
 						</QuestionMessage>
 					) : (
 						<AnswerMessage key={message.id}>
-							<MessageContent>{message.messageContent}</MessageContent>
+							<ProfileImg
+								src='/gpt-profile.png'
+								alt='user profile'
+							/>
+							<MessageContent style={{ width: '56%' }}>
+								{message.messageContent}
+							</MessageContent>
 							{showTick && copiedMessageId === message.id ? (
 								<TickIcon />
 							) : (

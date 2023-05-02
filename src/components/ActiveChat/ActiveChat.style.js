@@ -40,8 +40,22 @@ export const AnswerMessage = styled.article`
 	background-color: #434654;
 `;
 
+export const ProfileAndText = styled.div`
+	width: 58%;
+	display: flex;
+	flex-direction: row;
+	aligni-tems: center;
+`;
+
+export const ProfileImg = styled.img`
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-right: 10px;
+`;
+
 export const MessageContent = styled.div`
-	width: 56%;
+	width: 100%;
 	font-size: 16px;
 	line-height: 26px;
 	white-space: pre-wrap;

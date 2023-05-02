@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 
 export const ChatHistoryWrapper = styled.div`
 	width: 320px;
-	min-height: 100vh;
+	height: 100vh;
 	background-color: #202123;
 	color: #fff;
 	font-family: 'Inter', sans-serif;

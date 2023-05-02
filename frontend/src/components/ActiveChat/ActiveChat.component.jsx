@@ -75,10 +75,13 @@ const ActiveChat = ({ chatId }) => {
 						</QuestionMessage>
 					) : (
 						<AnswerMessage key={message.id}>
-							<MessageContent>{message.messageContent}</MessageContent>
+							<MessageContent>{message.messageContent.trim()}</MessageContent>
 						</AnswerMessage>
 					)
 				)}
+				<div
+					style={{ width: '100%', backgroundColor: '#333641', height: 200 }}
+				></div>
 			</MessagesList>
 			<NewQuestionInputWrapper>
 				<NewQuestionInput

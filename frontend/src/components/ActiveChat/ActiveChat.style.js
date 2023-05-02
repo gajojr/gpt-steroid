@@ -4,6 +4,7 @@ import { TbPencilMinus, TbSend } from 'react-icons/tb';
 export const ActiveChatWrapper = styled.section`
 	width: 100%;
 	min-height: 100vh;
+	overflow: scroll;
 	background-color: #343541;
 	display: flex;
 	flex-direction: column;
@@ -38,9 +39,18 @@ export const AnswerMessage = styled.article`
 `;
 
 export const MessageContent = styled.div`
-	width: 80%;
-	text-align: center;
+	width: 56%;
 	font-size: 15px;
+	white-space: pre-wrap;
+
+	code {
+		background-color: #f8f8f8;
+		border: 1px solid #ccc;
+		font-family: Consolas, 'Courier New', monospace;
+		font-size: 1rem;
+		padding: 0.2rem 0.5rem;
+		color: red;
+	}
 `;
 
 export const EditQuestion = styled.div`

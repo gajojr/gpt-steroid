@@ -9,7 +9,14 @@ async function askQuestion(question) {
 			max_tokens: 300,
 		});
 		console.log(completion.data.choices[0].text);
-		return completion.data.choices[0].text;
+		const response = completion.data.choices[0].text;
+
+		// const codeRegex = /(```[\s\S]*?```|`[\s\S]*?`)/g;
+		// const formattedResponse = response.replace(codeRegex, '<code>$1</code>');
+
+		// console.log(formattedResponse);
+
+		return response.trim();
 	} catch (err) {
 		console.log('error: ', err.response.data.error);
 	}

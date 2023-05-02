@@ -27,7 +27,3 @@ Chat GPT Steroid is an enhanced version of the Chat GPT language model built on 
 ## Contributing
 
 We welcome contributions from anyone! Please feel free to submit a pull request or open an issue on GitHub.
-
-## License
-
-This project is licensed under the [MIT License](https://github.com/gajojr/gpt-steroid/blob/main/LICENSE).

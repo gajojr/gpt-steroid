@@ -19,6 +19,8 @@ const StarterScreen = () => {
 				<Feature>File uploads (fine tuning)</Feature>
 				<Feature>Open source</Feature>
 				<Feature>Local setup</Feature>
+				<Feature>AutoGPT self promting</Feature>
+				<Feature>Internet access</Feature>
 			</FeaturesList>
 		</StarterScreenWrapper>
 	);

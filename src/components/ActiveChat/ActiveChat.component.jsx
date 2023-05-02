@@ -3,42 +3,22 @@ import db from '../../db';
 // import messages from '../../mocks/messages';
 import {
 	ActiveChatWrapper,
-	AnswerMessage,
 	MessagesList,
-	QuestionMessage,
-	MessageContent,
-	EditQuestion,
-	EditQuestionBtn,
-	EditQuestionText,
 	NewQuestionInputWrapper,
 	NewQuestionInput,
 	SubmitQuestionIcon,
-	CopyIcon,
-	TickIcon,
-	ProfileAndText,
-	ProfileImg,
 	DownArrow,
 } from './ActiveChat.style';
 import askQuestion from '../../chat/askQuestion';
+import QuestionMessage from './QuestionMessage/QuestionMessage.component';
+import AnswerQuestion from './AnswerQuestion/AnswerQuestion.component';
 
 const ActiveChat = ({ chatId }) => {
 	const activeChatRef = useRef(null);
 	const textareaRef = useRef(null);
 	const [currentPromt, setCurrentPromt] = useState('');
 	const [messages, setMessages] = useState([]);
-	const [showTick, setShowTick] = useState(false);
-	const [copiedMessageId, setCopiedMessageId] = useState(null);
 	const [isAtChatEnd, setIsAtChatEnd] = useState(true);
-
-	const copyToClipboard = (message) => {
-		navigator.clipboard.writeText(message.messageContent);
-		setCopiedMessageId(message.id);
-		setShowTick(true);
-		setTimeout(() => {
-			setShowTick(false);
-			setCopiedMessageId(null);
-		}, 2000);
-	};
 
 	useEffect(() => {
 		const chatSection = activeChatRef.current;
@@ -95,7 +75,6 @@ const ActiveChat = ({ chatId }) => {
 			.where('chatId')
 			.equals(chatId)
 			.toArray();
-		console.log(newMessages);
 		setMessages(newMessages);
 	};
 
@@ -109,36 +88,20 @@ const ActiveChat = ({ chatId }) => {
 	return (
 		<ActiveChatWrapper ref={activeChatRef}>
 			<MessagesList>
-				{messages.map((message) =>
+				{messages.map((message, idx) =>
 					message.messageType === 'question' ? (
-						<QuestionMessage key={message.id}>
-							<ProfileAndText>
-								<ProfileImg
-									src='/user-profile.jpeg'
-									alt='user profile'
-								/>
-								<MessageContent>{message.messageContent}</MessageContent>
-							</ProfileAndText>
-							<EditQuestion>
-								<EditQuestionText>Edit question</EditQuestionText>
-								<EditQuestionBtn />
-							</EditQuestion>
-						</QuestionMessage>
+						<QuestionMessage
+							key={message.id}
+							chatId={chatId}
+							message={message}
+							answerLoading={idx === messages.length - 1}
+							setMessages={setMessages}
+						/>
 					) : (
-						<AnswerMessage key={message.id}>
-							<ProfileImg
-								src='/gpt-profile.png'
-								alt='user profile'
-							/>
-							<MessageContent style={{ width: '56%' }}>
-								{message.messageContent}
-							</MessageContent>
-							{showTick && copiedMessageId === message.id ? (
-								<TickIcon />
-							) : (
-								<CopyIcon onClick={() => copyToClipboard(message)} />
-							)}
-						</AnswerMessage>
+						<AnswerQuestion
+							key={message.id}
+							message={message}
+						/>
 					)
 				)}
 				<div

@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 import { TbPencilMinus, TbSend } from 'react-icons/tb';
+import { MdContentCopy } from 'react-icons/md';
+import { TiTick } from 'react-icons/ti';
 
 export const ActiveChatWrapper = styled.section`
 	width: 100%;
@@ -40,7 +42,8 @@ export const AnswerMessage = styled.article`
 
 export const MessageContent = styled.div`
 	width: 56%;
-	font-size: 15px;
+	font-size: 16px;
+	line-height: 26px;
 	white-space: pre-wrap;
 
 	code {
@@ -134,5 +137,35 @@ export const SubmitQuestionIcon = styled(TbSend)`
 			props.enableBackground ? '#202123' : 'none'};
 		border-radius: ${(props) => (props.enableBackground ? '5px' : '')};
 		padding: ${(props) => (props.enableBackground ? '2px' : '')};
+	}
+`;
+
+const iconStyle = css`
+	color: #acacbd;
+	font-size: 26px;
+	margin-left: 10px;
+	transition: all 0.5s;
+
+	&:hover {
+		cursor: pointer;
+		color: #fff;
+		background-color: #202123;
+		font-size: 28px;
+		padding: 5px;
+		border-radius: 5px;
+	}
+`;
+
+export const CopyIcon = styled(MdContentCopy)`
+	${iconStyle};
+`;
+
+export const TickIcon = styled(TiTick)`
+	${iconStyle};
+
+	&:hover {
+		cursor: auto;
+		padding: 0;
+		border-radius: 0;
 	}
 `;

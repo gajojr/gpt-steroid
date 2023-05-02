@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 import { MdOutlineChatBubbleOutline } from 'react-icons/md';
 import { TbPencilMinus } from 'react-icons/tb';
 import { BsTrash3 } from 'react-icons/bs';
-import { GoPlus } from 'react-icons/go';
 import { TiTick } from 'react-icons/ti';
 
 export const ItemWrapper = styled.li`

@@ -13,6 +13,8 @@ import {
 	NewQuestionInputWrapper,
 	NewQuestionInput,
 	SubmitQuestionIcon,
+	CopyIcon,
+	TickIcon,
 } from './ActiveChat.style';
 import askQuestion from '../../chat/askQuestion';
 
@@ -21,6 +23,25 @@ const ActiveChat = ({ chatId }) => {
 	const textareaRef = useRef(null);
 	const [currentPromt, setCurrentPromt] = useState('');
 	const [messages, setMessages] = useState([]);
+	const [showTick, setShowTick] = useState(false);
+	const [copiedMessageId, setCopiedMessageId] = useState(null);
+
+	const copyToClipboard = (message) => {
+		navigator.clipboard.writeText(message.messageContent);
+		setCopiedMessageId(message.id);
+		setShowTick(true);
+		setTimeout(() => {
+			setShowTick(false);
+			setCopiedMessageId(null);
+		}, 2000);
+	};
+
+	// useEffect(() => {
+	// 	if (showTick) {
+	// 		const timer = setTimeout(() => setShowTick(false), 2000);
+	// 		return () => clearTimeout(timer);
+	// 	}
+	// }, [showTick]);
 
 	useEffect(() => {
 		// scroll to the bottom of the chat after every message
@@ -81,7 +102,12 @@ const ActiveChat = ({ chatId }) => {
 						</QuestionMessage>
 					) : (
 						<AnswerMessage key={message.id}>
-							<MessageContent>{message.messageContent.trim()}</MessageContent>
+							<MessageContent>{message.messageContent}</MessageContent>
+							{showTick && copiedMessageId === message.id ? (
+								<TickIcon />
+							) : (
+								<CopyIcon onClick={() => copyToClipboard(message)} />
+							)}
 						</AnswerMessage>
 					)
 				)}

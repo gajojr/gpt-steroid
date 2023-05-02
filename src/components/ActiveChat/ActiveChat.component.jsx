@@ -17,9 +17,15 @@ import {
 import askQuestion from '../../chat/askQuestion';
 
 const ActiveChat = ({ chatId }) => {
+	const activeChatRef = useRef(null);
 	const textareaRef = useRef(null);
 	const [currentPromt, setCurrentPromt] = useState('');
 	const [messages, setMessages] = useState([]);
+
+	useEffect(() => {
+		// scroll to the bottom of the chat after every message
+		activeChatRef.current.scrollTop = activeChatRef.current.scrollHeight;
+	}, [messages]);
 
 	useEffect(() => {
 		(async () => {
@@ -43,7 +49,9 @@ const ActiveChat = ({ chatId }) => {
 		const messages = await db.messages.where('chatId').equals(chatId).toArray();
 		setMessages(messages);
 
+		setCurrentPromt('');
 		const answer = await askQuestion(currentPromt);
+
 		await db.messages.add({
 			chatId,
 			creationDate: new Date(),
@@ -57,12 +65,10 @@ const ActiveChat = ({ chatId }) => {
 			.toArray();
 		console.log(newMessages);
 		setMessages(newMessages);
-
-		setCurrentPromt('');
 	};
 
 	return (
-		<ActiveChatWrapper>
+		<ActiveChatWrapper ref={activeChatRef}>
 			<MessagesList>
 				{messages.map((message) =>
 					message.messageType === 'question' ? (

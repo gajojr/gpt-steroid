@@ -12,6 +12,7 @@ import {
 import askQuestion from '../../chat/askQuestion';
 import QuestionMessage from './QuestionMessage/QuestionMessage.component';
 import AnswerQuestion from './AnswerQuestion/AnswerQuestion.component';
+import FileUploader from './FileUploader/FileUploader.component';
 
 const ActiveChat = ({ chatId }) => {
 	const activeChatRef = useRef(null);
@@ -134,6 +135,7 @@ const ActiveChat = ({ chatId }) => {
 					}}
 				/>
 			</NewQuestionInputWrapper>
+			<FileUploader />
 			{!isAtChatEnd && <DownArrow onClick={handleScrollDown} />}
 		</ActiveChatWrapper>
 	);

@@ -13,7 +13,7 @@ import {
 	CancelEditBtn,
 } from './QuestionMessage.style';
 import db from '../../../db';
-import askQuestion from '../../../chat/askQuestion';
+import axios from 'axios';
 
 const QuestionMessage = ({ chatId, message, answerLoading, setMessages }) => {
 	const questionInputRef = useRef(null);
@@ -35,9 +35,14 @@ const QuestionMessage = ({ chatId, message, answerLoading, setMessages }) => {
 			messageContent: question,
 		});
 
-		const answer = await askQuestion(question);
+		const answer = await axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/ask-question`,
+			{
+				question,
+			}
+		);
 		await db.messages.update(message.id + 1, {
-			messageContent: answer,
+			messageContent: answer.data,
 		});
 
 		setEditPending(false);
@@ -72,7 +77,10 @@ const QuestionMessage = ({ chatId, message, answerLoading, setMessages }) => {
 					</CancelEditBtn>
 				</EditOptions>
 			) : (
-				<EditQuestion onClick={() => setEditable(true)}>
+				<EditQuestion
+					disabled={editPending || answerLoading}
+					onClick={() => setEditable(true)}
+				>
 					<EditQuestionText>Edit question</EditQuestionText>
 					<EditQuestionBtn />
 				</EditQuestion>

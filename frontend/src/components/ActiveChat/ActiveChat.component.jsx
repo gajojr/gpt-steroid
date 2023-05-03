@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import db from '../../db';
 // import messages from '../../mocks/messages';
 import {
@@ -9,7 +10,6 @@ import {
 	SubmitQuestionIcon,
 	DownArrow,
 } from './ActiveChat.style';
-import askQuestion from '../../chat/askQuestion';
 import QuestionMessage from './QuestionMessage/QuestionMessage.component';
 import AnswerQuestion from './AnswerQuestion/AnswerQuestion.component';
 import FileUploader from './FileUploader/FileUploader.component';
@@ -63,13 +63,19 @@ const ActiveChat = ({ chatId }) => {
 		setMessages(messages);
 
 		setCurrentPromt('');
-		const answer = await askQuestion(currentPromt);
+		const answer = await axios.post(
+			`${process.env.REACT_APP_SERVER_URL}/ask-question`,
+			{
+				question: currentPromt,
+			}
+		);
+		console.log(answer);
 
 		await db.messages.add({
 			chatId,
 			creationDate: new Date(),
 			messageType: 'answer',
-			messageContent: answer,
+			messageContent: answer.data,
 		});
 
 		const newMessages = await db.messages

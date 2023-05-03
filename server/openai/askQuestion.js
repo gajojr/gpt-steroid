@@ -1,6 +1,6 @@
-import openai from './index';
+import openai from './index.js';
 
-async function askQuestion(question) {
+export async function askQuestion(question) {
 	try {
 		console.log(question);
 		const completion = await openai.createCompletion({
@@ -22,4 +22,19 @@ async function askQuestion(question) {
 	}
 }
 
-export default askQuestion;
+export async function askQuestionTuned(modelId, prompt) {
+	try {
+		const response = await openai.createCompletion({
+			model: modelId,
+			prompt,
+			max_tokens: 32000,
+		});
+		if (response.data) {
+			console.log('choices: ', response.data.choices);
+		}
+
+		return response.data.choices[0].text;
+	} catch (err) {
+		console.log('err: ', err);
+	}
+}

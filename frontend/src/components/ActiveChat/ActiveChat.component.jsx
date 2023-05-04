@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import db from '../../db';
-// import messages from '../../mocks/messages';
+import { store } from '../../redux/store';
 import {
 	ActiveChatWrapper,
 	MessagesList,
@@ -26,7 +26,7 @@ const ActiveChat = ({ chatId }) => {
 		const handleScroll = () => {
 			setIsAtChatEnd(
 				chatSection.scrollHeight - chatSection.scrollTop ===
-					chatSection.clientHeight
+				chatSection.clientHeight
 			);
 		};
 		chatSection.addEventListener('scroll', handleScroll);
@@ -63,12 +63,24 @@ const ActiveChat = ({ chatId }) => {
 		setMessages(messages);
 
 		setCurrentPromt('');
-		const answer = await axios.post(
-			`${process.env.REACT_APP_SERVER_URL}/ask-question`,
-			{
-				question: currentPromt,
-			}
-		);
+		let answer;
+		if (store.getState().fineTune.currentFineTunedModel) {
+			answer = await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/ask-question-tuned`,
+				{
+					question: currentPromt,
+					model: store.getState().fineTune.currentFineTunedModel
+				}
+			);
+		} else {
+			answer = await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/ask-question`,
+				{
+					question: currentPromt,
+				}
+			);
+		}
+
 		console.log(answer);
 
 		await db.messages.add({

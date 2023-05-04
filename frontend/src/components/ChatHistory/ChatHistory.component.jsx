@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+// import axios from 'axios';
 import Swal from 'sweetalert2';
 import {
 	ChatHistoryWrapper,
@@ -10,25 +11,35 @@ import {
 	TunesList,
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
-import db from '../../db';
+import db, { fileEventEmitter } from '../../db';
 import ChatItem from './ChatItem/ChatItem.component';
-import axios from 'axios';
+import FineTuneItem from './FineTuneItem/FineTuneItem.component';
+import { useSelector } from 'react-redux';
 
 const ChatHistory = () => {
 	const dispatch = useDispatch();
 	const [chats, setChats] = useState([]);
 	const [fineTunes, setFineTunes] = useState([]);
+	const selectedTunedModel = useSelector(state => state.fineTune.currentFineTunedModel);
 
 	useEffect(() => {
 		db.chats.toArray().then((chats) => setChats(chats));
+		db.fileUploads.toArray().then((uploads) => setFineTunes(uploads));
+	}, []);
 
-		(async function () {
-			const res = await axios.get(
-				`${process.env.REACT_APP_SERVER_URL}/fine-tunes`
-			);
-			console.log(res);
-			setFineTunes(res.data);
-		})();
+	useEffect(() => {
+		fileEventEmitter.on('fileAdded', () => {
+			db.fileUploads.toArray().then((uploads) => setFineTunes(uploads));
+		});
+
+		fileEventEmitter.on('fileDeleted', () => {
+			db.fileUploads.toArray().then((uploads) => setFineTunes(uploads));
+		});
+
+		// clean up event listeners
+		return () => {
+			fileEventEmitter.removeAllListeners();
+		};
 	}, []);
 
 	const handleAddChatClick = () => {
@@ -80,7 +91,20 @@ const ChatHistory = () => {
 					);
 				})}
 			</ChatList>
-			<TunesList></TunesList>
+			<SectionTitle>Fine tunes</SectionTitle>
+			<TunesList>
+				{fineTunes.map((fineTune) => {
+					return (
+						<FineTuneItem
+							key={fineTune.id}
+							selected={selectedTunedModel === fineTune.fineTunedModel}
+							fineTune={fineTune}
+							fineTunes={fineTunes}
+							setFineTunes={setFineTunes}
+						/>
+					);
+				})}
+			</TunesList>
 		</ChatHistoryWrapper>
 	);
 };

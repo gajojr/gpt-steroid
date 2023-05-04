@@ -5,18 +5,19 @@ export async function createFineTune(file) {
     try {
         const readableStream = createReadStream(`./fine-tunes/${file.originalname}`);
         const uploadResponse = await openai.createFile(readableStream, 'fine-tune');
-        console.log(uploadResponse);
 
         const response = await openai.createFineTune({
             training_file: uploadResponse.data.id,
             model: 'davinci',
         });
-        console.log('response: ', response);
 
-		return {
-			fileId: uploadResponse.data.id,
-			tuneId: response.data.id,
-		};
+        const fineTunedModel = await waitForTuneToCreate();
+
+        return {
+            fileId: uploadResponse.data.id,
+            tuneId: response.data.id,
+            fineTunedModel
+        };
     } catch (err) {
         console.log('error: ', err);
     }
@@ -32,9 +33,30 @@ export async function listFineTunes() {
     }
 }
 
-export async function deleteFineTune(modelId) {
+async function waitForTuneToCreate() {
     try {
-        const response = await openai.deleteModel(modelId);
+        const response = await openai.listFineTunes();
+        const fineTunes = response.data.data;
+
+        // Check if last fine-tune is still pending
+        const lastFineTune = fineTunes[fineTunes.length - 1];
+        if (lastFineTune.status !== 'succeeded') {
+            // If last fine-tune is still pending, wait for some time and call listFineTunes again
+            await new Promise((resolve) => setTimeout(resolve, 30000));
+            return await waitForTuneToCreate();
+        } else {
+            // If last fine-tune is succeeded, return fine_tuned_model
+            console.log('data: ', lastFineTune.fine_tuned_model);
+            return lastFineTune.fine_tuned_model;
+        }
+    } catch (err) {
+        console.log('error:', err);
+    }
+}
+
+export async function deleteFineTune(model) {
+    try {
+        const response = await openai.deleteModel(model);
         console.log('response: ', response);
     } catch (err) {
         console.log('err: ', err);

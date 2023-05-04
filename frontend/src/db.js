@@ -1,13 +1,15 @@
 import Dexie from 'dexie';
+import { EventEmitter } from 'events';
 
 const db = new Dexie('GPT-tunner');
 
-db.version(1).stores({
+db.version(3).stores({
     chats: '++id, name, creationDate',
-    fileUploads: '++id, fileName, fileId, tuneId, uploadDate',
+    fileUploads: '++id, fileName, fileId, tuneId, uploadDate, fineTunedModel',
     messages: '++id, chatId, creationDate, messageType, messageContent',
 });
 
+export const fileEventEmitter = new EventEmitter();
 export default db;
 
 // await db.chats.add({ name: 'Chat Name', creationDate: new Date() });

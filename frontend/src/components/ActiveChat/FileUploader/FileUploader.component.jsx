@@ -11,7 +11,7 @@ import {
 	Spinner,
 	UploadIcon,
 } from './FileUploader.style';
-import db from '../../../db';
+import db, { fileEventEmitter } from '../../../db';
 
 function FileUploader() {
 	const inputRef = useRef();
@@ -28,21 +28,26 @@ function FileUploader() {
 			setUploadPending(true);
 			const formData = new FormData();
 			formData.append('file', file);
-			const fileId = await axios.post(
+			const response = await axios.post(
 				`${process.env.REACT_APP_SERVER_URL}/upload-file`,
 				formData,
 				{
 					'Content-Type': 'multipart/form-data',
 				}
 			);
-			console.log(fileId);
-			// const fileId = await createFineTune(file);
+			const fileId = response.data.fileId;
+			const tuneId = response.data.tuneId;
+			const fineTunedModel = response.data.fineTunedModel;
 
-			// await db.fileUploads.add({
-			// 	fileName: file.name,
-			// 	fileId,
-			// 	uploadDate: new Date(),
-			// });
+			await db.fileUploads.add({
+				fileName: file.name,
+				fileId,
+				tuneId,
+				uploadDate: new Date(),
+				fineTunedModel
+			});
+
+			fileEventEmitter.emit('fileAdded');
 
 			setUploadPending(false);
 			inputRef.current.value = null;

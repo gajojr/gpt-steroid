@@ -2,7 +2,7 @@ import { existsSync, mkdirSync } from 'fs';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import { askQuestion } from './openai/askQuestion.js';
+import { askQuestion, askQuestionTuned } from './openai/askQuestion.js';
 import {
     listFineTunes,
     deleteFineTune,
@@ -40,8 +40,8 @@ app.get('/fine-tunes', async(req, res) => {
 app.post('/upload-file', upload.single('file'), async(req, res) => {
     const file = req.file;
     try {
-        const { fileId, tuneId } = await createFineTune(file);
-        res.json({ fileId, tuneId });
+        const { fileId, tuneId, fineTunedModel } = await createFineTune(file);
+        res.json({ fileId, tuneId, fineTunedModel });
     } catch (err) {
         console.log('error: ', err);
         res.status(500).send('Server error');
@@ -55,13 +55,14 @@ app.post('/ask-question', async(req, res) => {
 });
 
 app.post('/ask-question-tuned', async(req, res) => {
-    const { question, modelId } = req.body;
-    const answer = await askQuestion(modelId, question);
+    const { question, model } = req.body;
+    const answer = await askQuestionTuned(model, question);
     res.send(answer);
 });
 
 app.delete('/fine-tune', async(req, res) => {
-    await deleteFineTune(req.modelId);
+    console.log(req.body);
+    await deleteFineTune(req.body.model);
     res.json({ status: 'success' });
 });
 

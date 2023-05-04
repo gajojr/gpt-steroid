@@ -1,3 +1,4 @@
 node_modules
 .env
 fine-tunes
+test.js

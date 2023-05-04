@@ -15,7 +15,6 @@ const FineTuneItem = ({ selected, fineTune, setFineTunes, fineTunes }) => {
 
 	async function handleRemoveChatClick(tuneId) {
 		try {
-			console.log(fineTune.fineTunedModel);
 			const result = await Swal.fire({
 				title: 'Are you sure you want to delete this fine tune?',
 				text: 'This will delete fine tune both here and on your openai api',
@@ -31,7 +30,9 @@ const FineTuneItem = ({ selected, fineTune, setFineTunes, fineTunes }) => {
 				await db.fileUploads.where({ id: tuneId }).delete();
 				setFineTunes(fineTunes.filter((fineTune) => fineTune.id !== tuneId));
 				await axios.delete(`${process.env.REACT_APP_SERVER_URL}/fine-tune`, {
-					model: fineTune.fineTunedModel
+					data: {
+						model: fineTune.fineTunedModel
+					}
 				});
 			}
 		} catch (err) {

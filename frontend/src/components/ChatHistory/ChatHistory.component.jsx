@@ -48,6 +48,9 @@ const ChatHistory = () => {
 			},
 		}).then(async (result) => {
 			if (result.isConfirmed) {
+				if (!result.value?.length) {
+					return;
+				}
 				const chatId = await db.chats.add({
 					name: result.value,
 					creationDate: new Date(),

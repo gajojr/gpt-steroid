@@ -1,7 +1,23 @@
 import express from 'express';
 import cors from 'cors';
-const app = express();
+import multer from 'multer';
 import { askQuestion } from './openai/askQuestion.js';
+import {
+	listFineTunes,
+	deleteFineTune,
+	createFineTune,
+} from './openai/fineTunning.js';
+
+const app = express();
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, './fine-tunes');
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.originalname);
+	},
+});
+const upload = multer({ storage });
 
 app.use(
 	cors({
@@ -11,8 +27,13 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.post('/upload-file', async (req, res) => {
-	const { file } = req.files;
+app.get('/fine-tunes', async (req, res) => {
+	const fineTunes = listFineTunes();
+	res.send(fineTunes);
+});
+
+app.post('/upload-file', upload.single('file'), async (req, res) => {
+	const file = req.file;
 	try {
 		const fileId = await createFineTune(file);
 		res.json({ fileId });
@@ -32,6 +53,11 @@ app.post('/ask-question-tuned', async (req, res) => {
 	const { question, modelId } = req.body;
 	const answer = await askQuestion(modelId, question);
 	res.send(answer);
+});
+
+app.delete('/fine-tune', async (req, res) => {
+	await deleteFineTune(req.modelId);
+	res.json({ status: 'success' });
 });
 
 app.listen(8000, () => {

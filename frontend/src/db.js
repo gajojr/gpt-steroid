@@ -4,7 +4,7 @@ const db = new Dexie('GPT-tunner');
 
 db.version(1).stores({
 	chats: '++id, name, creationDate',
-	fileUploads: '++id, fileName, uploadDate',
+	fileUploads: '++id, fileName, fileId, uploadDate',
 	messages: '++id, chatId, creationDate, messageType, messageContent',
 });
 

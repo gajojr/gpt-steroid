@@ -33,16 +33,6 @@ export const AddNewChatBtn = styled.button`
 	}
 `;
 
-export const ChatList = styled.ul`
-	margin-block-start: 0.5em;
-	list-style-type: none;
-	width: 100%;
-	padding-inline-start: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
 export const ItemWrapper = styled.li`
 	width: 100%;
 	display: flex;
@@ -84,3 +74,31 @@ export const PlusIcon = styled(GoPlus)`
 		color: #fff;
 	}
 `;
+
+export const ChatList = styled.ul`
+	margin-block-start: 0.5em;
+	list-style-type: none;
+	width: 100%;
+	max-height: 35vh;
+	overflow-y: auto;
+	padding-inline-start: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background-color: #434654;
+		border-radius: 10px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: #f1f1f1;
+		border-radius: 10px;
+	}
+`;
+
+export const TunesList = styled.ul``;

@@ -7,17 +7,28 @@ import {
 	SectionTitle,
 	AddNewChatBtn,
 	PlusIcon,
+	TunesList,
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
 import db from '../../db';
 import ChatItem from './ChatItem/ChatItem.component';
+import axios from 'axios';
 
 const ChatHistory = () => {
 	const dispatch = useDispatch();
 	const [chats, setChats] = useState([]);
+	const [fineTunes, setFineTunes] = useState([]);
 
 	useEffect(() => {
 		db.chats.toArray().then((chats) => setChats(chats));
+
+		(async function () {
+			const res = await axios.get(
+				`${process.env.REACT_APP_SERVER_URL}/fine-tunes`
+			);
+			console.log(res);
+			setFineTunes(res.data);
+		})();
 	}, []);
 
 	const handleAddChatClick = () => {
@@ -66,6 +77,7 @@ const ChatHistory = () => {
 					);
 				})}
 			</ChatList>
+			<TunesList></TunesList>
 		</ChatHistoryWrapper>
 	);
 };

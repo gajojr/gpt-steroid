@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import {
 	ConfirmUploadIcon,
 	FileUploadInput,
@@ -25,12 +26,23 @@ function FileUploader() {
 	const confirmFileUpload = async () => {
 		try {
 			setUploadPending(true);
+			const formData = new FormData();
+			formData.append('file', file);
+			const fileId = await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/upload-file`,
+				formData,
+				{
+					'Content-Type': 'multipart/form-data',
+				}
+			);
+			console.log(fileId);
 			// const fileId = await createFineTune(file);
 
-			await db.fileUploads.add({
-				// fileName: fileId,
-				uploadDate: new Date(),
-			});
+			// await db.fileUploads.add({
+			// 	fileName: file.name,
+			// 	fileId,
+			// 	uploadDate: new Date(),
+			// });
 
 			setUploadPending(false);
 			inputRef.current.value = null;
@@ -55,8 +67,8 @@ function FileUploader() {
 				icon: 'error',
 				title: 'File upload failed',
 				text: error.message,
-				showConfirmButton: false,
-				timer: 1500,
+				showConfirmButton: true,
+				// timer: 1500,
 				backdrop: 'rgba(0, 0, 0, 0.4)',
 				customClass: {
 					title: 'swal2-title-style',

@@ -27,8 +27,8 @@ export async function askQuestionTuned(model, prompt) {
         const response = await openai.createCompletion({
             model,
             prompt,
-            max_tokens: 1000,
-            stop: '###',
+            max_tokens: 300,
+            stop: ' END',
         });
         if (response.data) {
             console.log('choices: ', response.data.choices);

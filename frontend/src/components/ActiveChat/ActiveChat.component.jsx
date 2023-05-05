@@ -68,7 +68,7 @@ const ActiveChat = ({ chatId }) => {
 			answer = await axios.post(
 				`${process.env.REACT_APP_SERVER_URL}/ask-question-tuned`,
 				{
-					question: currentPromt,
+					question: `${currentPromt}?\n\n###\n\n`,
 					model: store.getState().fineTune.currentFineTunedModel
 				}
 			);

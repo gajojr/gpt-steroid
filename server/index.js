@@ -61,7 +61,7 @@ app.post('/ask-question-tuned', async(req, res) => {
 });
 
 app.delete('/fine-tune', async(req, res) => {
-    await deleteFineTune(req.body.model);
+    await deleteFineTune(req.body.model, req.body.fileId);
     res.json({ status: 'success' });
 });
 

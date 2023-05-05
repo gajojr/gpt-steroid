@@ -31,7 +31,8 @@ const FineTuneItem = ({ selected, fineTune, setFineTunes, fineTunes }) => {
 				setFineTunes(fineTunes.filter((fineTune) => fineTune.id !== tuneId));
 				await axios.delete(`${process.env.REACT_APP_SERVER_URL}/fine-tune`, {
 					data: {
-						model: fineTune.fineTunedModel
+						model: fineTune.fineTunedModel,
+						fileId: fineTune.fileId
 					}
 				});
 			}

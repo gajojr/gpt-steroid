@@ -42,7 +42,7 @@ async function waitForTuneToCreate() {
         const lastFineTune = fineTunes[fineTunes.length - 1];
         if (lastFineTune.status !== 'succeeded') {
             // If last fine-tune is still pending, wait for some time and call listFineTunes again
-            await new Promise((resolve) => setTimeout(resolve, 30000));
+            await new Promise((resolve) => setTimeout(resolve, 60000));
             return await waitForTuneToCreate();
         } else {
             // If last fine-tune is succeeded, return fine_tuned_model
@@ -54,10 +54,10 @@ async function waitForTuneToCreate() {
     }
 }
 
-export async function deleteFineTune(model) {
+export async function deleteFineTune(model, fileId) {
     try {
-        const response = await openai.deleteModel(model);
-        console.log('response: ', response);
+        await openai.deleteModel(model);
+        await openai.deleteFile(fileId);
     } catch (err) {
         console.log('err: ', err);
     }

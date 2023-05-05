@@ -5,8 +5,9 @@ export async function askQuestion(question) {
         console.log(question);
         const completion = await openai.createCompletion({
             model: 'text-davinci-003',
+            // model: 'gpt-4-32k',
             prompt: question,
-            max_tokens: 300,
+            max_tokens: 1000,
         });
         console.log(completion.data.choices[0].text);
         const response = completion.data.choices[0].text;
@@ -27,7 +28,7 @@ export async function askQuestionTuned(model, prompt) {
         const response = await openai.createCompletion({
             model,
             prompt,
-            max_tokens: 300,
+            max_tokens: 2000,
             stop: ' END',
         });
         if (response.data) {

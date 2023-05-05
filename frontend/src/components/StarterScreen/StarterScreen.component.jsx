@@ -15,12 +15,12 @@ const StarterScreen = () => {
 				<Subtitle>STEROID</Subtitle>
 			</Title>
 			<FeaturesList>
-				<Feature>Bigger input and output (up to 32K tokens)</Feature>
-				<Feature>File uploads (fine tuning)</Feature>
+				<Feature>Fine tuning</Feature>
 				<Feature>Open source</Feature>
 				<Feature>Local setup</Feature>
-				<Feature>AutoGPT self promting</Feature>
-				<Feature>Internet access</Feature>
+				<Feature>32K token output (In progress)</Feature>
+				<Feature>AutoGPT self promting (In progress)</Feature>
+				<Feature>Internet access (In progress)</Feature>
 			</FeaturesList>
 		</StarterScreenWrapper>
 	);

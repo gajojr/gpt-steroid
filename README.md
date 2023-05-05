@@ -4,7 +4,6 @@ Chat GPT Steroid is an enhanced version of the Chat GPT language model built on 
 
 ## Features ( built on top of chatGPT 4)
 
-- 32K token input and output
 - Local setup
 - File uploads for fine-tuning
 - IndexedDB data storage
@@ -21,8 +20,9 @@ Chat GPT Steroid is an enhanced version of the Chat GPT language model built on 
 
 ## Additional Features (in progress)
 
-- Access to the internet
+- 32K token input and output
 - Connection to Auto GPT for automatic prompting
+- Access to the internet
 
 ## Contributing
 

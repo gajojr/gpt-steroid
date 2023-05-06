@@ -40,6 +40,7 @@ export const CreateTuneLink = styled(Link)
 	width: 100%;
 	color: #fff;
 	padding: 12px 15px;
+	border: 1px solid #fff;
 	border-radius: 12px;
 	margin-top: 50px;
 	text-decoration: none;

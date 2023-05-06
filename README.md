@@ -2,7 +2,7 @@
 
 Chat GPT Steroid is an enhanced version of the Chat GPT language model built on top of OpenAI API. It allows up to 32K tokens for both input and output, which is 4 times larger than the Chat GPT 4. The data is stored locally in the browser's IndexedDB, and it allows for file uploads to fine-tune the model. The project also has a local setup, making it easy to run the application on your local machine.
 
-## Features ( built on top of chatGPT 4)
+## Features (built on top of chatGPT 4)
 
 - File uploads for fine-tuning
 - Create fine tune file via gui

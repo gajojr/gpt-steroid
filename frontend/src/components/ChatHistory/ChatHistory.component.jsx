@@ -92,32 +92,40 @@ const ChatHistory = () => {
 				</li>
 			</GuidesList>
 			<SectionTitle>Chat History</SectionTitle>
-			<ChatList>
-				{chats.map((chat) => {
-					return (
-						<ChatItem
-							key={chat.id}
-							chat={chat}
-							chats={chats}
-							setChats={setChats}
-						/>
-					);
-				})}
-			</ChatList>
+			{
+				chats.length ?
+					<ChatList>
+						{chats.map((chat) => {
+							return (
+								<ChatItem
+									key={chat.id}
+									chat={chat}
+									chats={chats}
+									setChats={setChats}
+								/>
+							);
+						})}
+					</ChatList> :
+					<p>No chats created</p>
+			}
 			<SectionTitle>Fine tunes</SectionTitle>
-			<TunesList>
-				{fineTunes.map((fineTune) => {
-					return (
-						<FineTuneItem
-							key={fineTune.id}
-							selected={selectedTunedModel === fineTune.fineTunedModel}
-							fineTune={fineTune}
-							fineTunes={fineTunes}
-							setFineTunes={setFineTunes}
-						/>
-					);
-				})}
-			</TunesList>
+			{
+				fineTunes.length ?
+					<TunesList>
+						{fineTunes.map((fineTune) => {
+							return (
+								<FineTuneItem
+									key={fineTune.id}
+									selected={selectedTunedModel === fineTune.fineTunedModel}
+									fineTune={fineTune}
+									fineTunes={fineTunes}
+									setFineTunes={setFineTunes}
+								/>
+							);
+						})}
+					</TunesList> :
+					<p>No tunes created</p>
+			}
 		</ChatHistoryWrapper>
 	);
 };

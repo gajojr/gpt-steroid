@@ -60,8 +60,29 @@ export async function askQuestion(chatId, question) {
     }
 }
 
-export async function askQuestionTuned(model, prompt) {
+export async function askQuestionTuned(chatId, model, prompt) {
     try {
+        const dir = './chats';
+        if (!existsSync(dir)) {
+            mkdirSync(dir);
+        }
+
+        const fileName = `./chats/chat_${chatId}.json`;
+        let messages = [];
+        if (!existsSync(fileName)) {
+            writeFileSync(fileName, JSON.stringify({ chatId, messages: [] }));
+        } else {
+            const file = readFileSync(fileName, { encoding: 'utf8' });
+            const fileParsed = JSON.parse(file);
+            messages = fileParsed.messages;
+            console.log(messages);
+        }
+
+        messages.push({
+            role: 'user',
+            content: prompt
+        });
+
         const response = await openai.createCompletion({
             model,
             prompt,
@@ -71,6 +92,19 @@ export async function askQuestionTuned(model, prompt) {
         if (response.data) {
             console.log('choices: ', response.data.choices);
         }
+
+        messages.push({
+            role: 'assistant',
+            content: response.data.choices[0].text
+        });
+
+        const chatData = { chatId, messages };
+
+        // Convert the object to JSON string
+        const jsonData = JSON.stringify(chatData);
+
+        // Save the JSON data to a file, e.g. "chat_1.json"
+        writeFileSync(`./chats/chat_${chatId}.json`, jsonData);
 
         return response.data.choices[0].text;
     } catch (err) {

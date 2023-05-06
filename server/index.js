@@ -55,8 +55,8 @@ app.post('/ask-question', async(req, res) => {
 });
 
 app.post('/ask-question-tuned', async(req, res) => {
-    const { question, model } = req.body;
-    const answer = await askQuestionTuned(model, question);
+    const { chatId, question, model } = req.body;
+    const answer = await askQuestionTuned(chatId, model, question);
     res.send(answer);
 });
 

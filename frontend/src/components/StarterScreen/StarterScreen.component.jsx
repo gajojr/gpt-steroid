@@ -16,9 +16,10 @@ const StarterScreen = () => {
 			</Title>
 			<FeaturesList>
 				<Feature>Fine tuning</Feature>
+				<Feature>Create fine tune file via gui</Feature>
 				<Feature>Open source</Feature>
 				<Feature>Local setup</Feature>
-				<Feature>32K token output (In progress)</Feature>
+				<Feature>32K token output</Feature>
 				<Feature>AutoGPT self promting (In progress)</Feature>
 				<Feature>Internet access (In progress)</Feature>
 			</FeaturesList>

@@ -10,7 +10,8 @@ import {
 	PlusIcon,
 	TunesList,
 	GuidesList,
-	StyledGuideLink
+	StyledGuideLink,
+	CreateTuneLink
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
 import db, { fileEventEmitter } from '../../db';
@@ -80,6 +81,7 @@ const ChatHistory = () => {
 				<PlusIcon />
 				<span>New chat</span>
 			</AddNewChatBtn>
+			<CreateTuneLink to='/create-fine-tune'>Create fine tune</CreateTuneLink>
 			<SectionTitle>Guides</SectionTitle>
 			<GuidesList>
 				<li>

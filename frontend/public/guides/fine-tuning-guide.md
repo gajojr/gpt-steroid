@@ -26,3 +26,7 @@
 7. Wait until the file finishes uploading, which can take up to 5 minutes. Do not refresh or close the page during this time.
 
 8. The file will show up in the tunes list. You can click on it to use it in the current chat.
+
+### If you strugle with creating .jsonl file, here is the gui for that:
+
+[JSONL GUI creator](http://localhost:3000/create-fine-tune)

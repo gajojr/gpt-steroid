@@ -26,6 +26,23 @@ export const AddNewChatBtn = styled.button `
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin-bottom: 20px;
+	transition: 0.4s background-color;
+
+	&:hover {
+		cursor: pointer;
+		background-color: #525050;
+	}
+`;
+
+export const CreateTuneLink = styled(Link)
+`
+	width: 100%;
+	color: #fff;
+	padding: 12px 15px;
+	border-radius: 12px;
+	margin-top: 50px;
+	text-decoration: none;
 	transition: 0.4s background-color;
 
 	&:hover {

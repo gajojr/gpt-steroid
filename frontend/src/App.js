@@ -9,6 +9,7 @@ import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner.component
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage.page'));
 const GuidePage = lazy(() => import('./pages/GuidePage/GuidePage.page'));
+const CreateFineTunePage = lazy(() => import('./pages/CreateFineTunePage/CreateFineTunePage.page'));
 
 function App() {
 	return (
@@ -22,6 +23,11 @@ function App() {
 				<Route path="/guides/:fileName" element={
 					<Suspense fallback={LoadingSpinner()}>
 						<GuidePage />
+					</Suspense>
+				} />
+				<Route path="/create-fine-tune" element={
+					<Suspense fallback={LoadingSpinner()}>
+						<CreateFineTunePage />
 					</Suspense>
 				} />
 			</Routes>

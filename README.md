@@ -15,8 +15,9 @@ Chat GPT Steroid is an enhanced version of the Chat GPT language model built on 
 3.  Navigate to the cloned repository
 4.  Create an OpenAI API key with a paid account
 5.  Navigate to server directory, create a `.env` file and set `OPENAI_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the value of the API key from OpenAI
-6.  Run `npm install` in frontend and server to install dependencies
-7.  Run `npm run dev` from root to start the application
+6.  Navigate to server directory, create a `.env` file and set `REACT_APP_SERVER_URL`=http://localhost:8000
+7.  Run `npm install` in frontend and server to install dependencies
+8.  Run `npm run dev` from root to start the application
 
 ## Additional Features (in progress)
 

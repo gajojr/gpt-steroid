@@ -1,26 +1,31 @@
-import React from 'react';
-import ChatHistory from './components/ChatHistory/ChatHistory.component';
-import StarterScreen from './components/StarterScreen/StarterScreen.component';
+import React, { lazy, Suspense } from 'react';
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route
+} from 'react-router-dom';
 import './App.css';
-import { useSelector } from 'react-redux';
-import ActiveChat from './components/ActiveChat/ActiveChat.component';
-import Footer from './components/Footer/Footer.component';
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner.component';
+
+const HomePage = lazy(() => import('./pages/HomePage/HomePage.page'));
+const GuidePage = lazy(() => import('./pages/GuidePage/GuidePage.page'));
 
 function App() {
-	const activeChatId = useSelector((state) => state.chat.currentChatId);
-
 	return (
-		<>
-			<main>
-				<ChatHistory />
-				{activeChatId ? (
-					<ActiveChat chatId={activeChatId} />
-				) : (
-					<StarterScreen />
-				)}
-			</main>
-			<Footer />
-		</>
+		<Router>
+			<Routes>
+				<Route path="/" element={
+					<Suspense fallback={LoadingSpinner()}>
+						<HomePage />
+					</Suspense>
+				} />
+				<Route path="/guides/:fileName" element={
+					<Suspense fallback={LoadingSpinner()}>
+						<GuidePage />
+					</Suspense>
+				} />
+			</Routes>
+		</Router>
 	);
 }
 

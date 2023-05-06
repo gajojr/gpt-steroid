@@ -1,9 +1,8 @@
-import styled, { css } from 'styled-components';
-import { TbPencilMinus, TbSend } from 'react-icons/tb';
-import { MdContentCopy } from 'react-icons/md';
+import styled from 'styled-components';
+import { TbSend } from 'react-icons/tb';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 
-export const ActiveChatWrapper = styled.section`
+export const ActiveChatWrapper = styled.section `
 	width: 100%;
 	max-height: 100vh;
 	overflow-y: scroll;
@@ -13,14 +12,14 @@ export const ActiveChatWrapper = styled.section`
 	align-items: center;
 `;
 
-export const MessagesList = styled.ul`
+export const MessagesList = styled.ul `
 	padding-inline-start: 0;
 	margin-block-start: 0;
 	margin-block-end: 0;
 	width: 100%;
 `;
 
-export const NewQuestionInputWrapper = styled.div`
+export const NewQuestionInputWrapper = styled.div `
 	display: flex;
 	flex-direction: row;
 	margin-top: 40px;
@@ -36,7 +35,7 @@ export const NewQuestionInputWrapper = styled.div`
 	bottom: 50px;
 `;
 
-export const NewQuestionInput = styled.textarea`
+export const NewQuestionInput = styled.textarea `
 	width: 97%;
 	background-color: transparent;
 	border: none;
@@ -63,7 +62,8 @@ export const NewQuestionInput = styled.textarea`
 	}
 `;
 
-export const SubmitQuestionIcon = styled(TbSend)`
+export const SubmitQuestionIcon = styled(TbSend)
+`
 	font-size: 24px;
 	align-self: end;
 	box-sizing: content-box;
@@ -71,13 +71,14 @@ export const SubmitQuestionIcon = styled(TbSend)`
 	&:hover {
 		cursor: pointer;
 		background-color: ${(props) =>
-			props.enableBackground ? '#202123' : 'none'};
+		props.enableBackground ? '#202123' : 'none'};
 		border-radius: ${(props) => (props.enableBackground ? '5px' : '')};
 		padding: ${(props) => (props.enableBackground ? '2px' : '')};
 	}
 `;
 
-export const DownArrow = styled(AiOutlineArrowDown)`
+export const DownArrow = styled(AiOutlineArrowDown)
+`
 	color: #acacbd;
 	background-color: #202123;
 	font-size: 30px;

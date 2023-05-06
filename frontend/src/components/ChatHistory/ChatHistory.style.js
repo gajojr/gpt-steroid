@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { GoPlus } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 export const ChatHistoryWrapper = styled.div `
 	width: 320px;
@@ -108,4 +109,18 @@ export const ChatList = styled.ul `
 
 export const TunesList = styled.ul `
 	${listStyle};
+`;
+
+export const GuidesList = styled.ul `
+	${listStyle};
+`;
+
+export const StyledGuideLink = styled(Link)
+`
+	color: #fff;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
 `;

@@ -9,6 +9,8 @@ import {
 	AddNewChatBtn,
 	PlusIcon,
 	TunesList,
+	GuidesList,
+	StyledGuideLink
 } from './ChatHistory.style';
 import { selectChatId } from '../../redux/reducers/Chat';
 import db, { fileEventEmitter } from '../../db';
@@ -78,6 +80,15 @@ const ChatHistory = () => {
 				<PlusIcon />
 				<span>New chat</span>
 			</AddNewChatBtn>
+			<SectionTitle>Guides</SectionTitle>
+			<GuidesList>
+				<li>
+					<StyledGuideLink to="/guides/fine-tuning-guide">Fine tuning</StyledGuideLink>
+				</li>
+				<li>
+					<StyledGuideLink to="/guides/large-output-guide">Large output</StyledGuideLink>
+				</li>
+			</GuidesList>
 			<SectionTitle>Chat History</SectionTitle>
 			<ChatList>
 				{chats.map((chat) => {

@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { selectChatId } from '../../../redux/reducers/Chat';
 import db from '../../../db';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const ChatItem = ({ chat, setChats, chats }) => {
 	const dispatch = useDispatch();
@@ -40,10 +41,16 @@ const ChatItem = ({ chat, setChats, chats }) => {
 			});
 
 			if (result.isConfirmed) {
+				await axios.delete(`${process.env.REACT_APP_SERVER_URL}/chat`, {
+					data: {
+						chatId
+					}
+				});
 				await db.chats.where({ id: chatId }).delete();
-				await db.messages.where({ chatId: chatId }).delete();
+				await db.messages.where({ chatId }).delete();
 				setChats(chats.filter((chat) => chat.id !== chatId));
-				window.location.reload();
+				dispatch(selectChatId(null));
+				// window.location.reload();
 			}
 		} catch (err) {
 			console.error(err);

@@ -1,16 +1,53 @@
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import openai from './index.js';
 
-export async function askQuestion(question) {
+export async function askQuestion(chatId, question) {
     try {
-        console.log(question);
-        const completion = await openai.createCompletion({
-            model: 'text-davinci-003',
-            // model: 'gpt-4-32k',
-            prompt: question,
-            max_tokens: 1000,
+        const dir = './chats';
+        if (!existsSync(dir)) {
+            mkdirSync(dir);
+        }
+
+        const fileName = `./chats/chat_${chatId}.json`;
+        let messages = [];
+        if (!existsSync(fileName)) {
+            writeFileSync(fileName, JSON.stringify({ chatId, messages: [] }));
+        } else {
+            const file = readFileSync(fileName, { encoding: 'utf8' });
+            const fileParsed = JSON.parse(file);
+            messages = fileParsed.messages;
+            console.log(messages);
+        }
+
+        messages.push({
+            role: 'user',
+            content: question
         });
-        console.log(completion.data.choices[0].text);
-        const response = completion.data.choices[0].text;
+
+        console.log(question);
+        const completion = await openai.createChatCompletion({
+            model: 'gpt-3.5-turbo',
+            // model: 'gpt-4-32k',
+            // prompt: question,
+            // max_tokens: 1000,
+            messages
+        });
+
+        console.log(completion.data.choices[0].message.content);
+        const response = completion.data.choices[0].message.content;
+
+        messages.push({
+            role: 'assistant',
+            content: response.trim()
+        });
+
+        const chatData = { chatId, messages };
+
+        // Convert the object to JSON string
+        const jsonData = JSON.stringify(chatData);
+
+        // Save the JSON data to a file, e.g. "chat_1.json"
+        writeFileSync(`./chats/chat_${chatId}.json`, jsonData);
 
         // const codeRegex = /(```[\s\S]*?```|`[\s\S]*?`)/g;
         // const formattedResponse = response.replace(codeRegex, '<code>$1</code>');
@@ -19,7 +56,7 @@ export async function askQuestion(question) {
 
         return response.trim();
     } catch (err) {
-        console.log('error: ', err.response.data.error);
+        console.log('error: ', err);
     }
 }
 

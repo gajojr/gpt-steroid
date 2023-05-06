@@ -69,7 +69,8 @@ const ActiveChat = ({ chatId }) => {
 				`${process.env.REACT_APP_SERVER_URL}/ask-question-tuned`,
 				{
 					question: `${currentPromt}?\n\n###\n\n`,
-					model: store.getState().fineTune.currentFineTunedModel
+					model: store.getState().fineTune.currentFineTunedModel,
+					chatId
 				}
 			);
 		} else {
@@ -77,6 +78,7 @@ const ActiveChat = ({ chatId }) => {
 				`${process.env.REACT_APP_SERVER_URL}/ask-question`,
 				{
 					question: currentPromt,
+					chatId
 				}
 			);
 		}

@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, unlink } from 'fs';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
@@ -49,8 +49,8 @@ app.post('/upload-file', upload.single('file'), async(req, res) => {
 });
 
 app.post('/ask-question', async(req, res) => {
-    const { question } = req.body;
-    const answer = await askQuestion(question);
+    const { chatId, question } = req.body;
+    const answer = await askQuestion(chatId, question);
     res.send(answer);
 });
 
@@ -58,6 +58,14 @@ app.post('/ask-question-tuned', async(req, res) => {
     const { question, model } = req.body;
     const answer = await askQuestionTuned(model, question);
     res.send(answer);
+});
+
+app.delete('/chat', async(req, res) => {
+    unlink(`./chats/chat_${req.body.chatId}.json`, (err) => {
+        if (err) throw err;
+        console.log('File deleted!');
+    });
+    res.json({ status: 'success' });
 });
 
 app.delete('/fine-tune', async(req, res) => {

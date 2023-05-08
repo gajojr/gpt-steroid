@@ -30,3 +30,4 @@
 ### If you strugle with creating .jsonl file, here is the gui for that:
 
 [JSONL GUI creator](http://localhost:3000/create-fine-tune)
+[Youtube tutorial](https://www.youtube.com/watch?v=EbITh2dgO2M)

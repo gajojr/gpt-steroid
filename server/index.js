@@ -8,6 +8,9 @@ import {
     deleteFineTune,
     createFineTune,
 } from './openai/fineTunning.js';
+import startAutoGPT from './autogpt.js';
+
+const childProcess = startAutoGPT();
 
 const app = express();
 const storage = multer.diskStorage({
@@ -71,6 +74,18 @@ app.delete('/chat', async(req, res) => {
 app.delete('/fine-tune', async(req, res) => {
     await deleteFineTune(req.body.model, req.body.fileId);
     res.json({ status: 'success' });
+});
+
+app.post('/autogpt-question', async(req, res) => {
+    const { question } = req.body;
+    childProcess.stdin.write(question + '\n');
+    let outputBuffer = '';
+    childProcess.stdout.on('data', (data) => {
+        outputBuffer += data.toString();
+    });
+    childProcess.on('end', () => {
+        res.send(outputBuffer);
+    });
 });
 
 app.listen(8000, () => {

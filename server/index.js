@@ -78,9 +78,11 @@ app.post('/autogpt-question', async(req, res) => {
     const { question } = req.body;
     childProcess.stdin.write(question + '\n');
     let outputBuffer = '';
-    childProcess.stdout.on('data', (data) => {
+
+    const onData = (data) => {
         if (data.indexOf(`Enter 'y' to authorise command`) !== -1) {
-            return res.send(`THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}`);
+            res.send(`THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}`);
+            return childProcess.stdout.off('data', onData); // remove listener from this request so next response works
         }
 
         if (!data.toString().includes('/ Thinking...') &&
@@ -90,9 +92,13 @@ app.post('/autogpt-question', async(req, res) => {
         ) {
             outputBuffer += data.toString().replace(/\[\d+m/g, '');
         }
-    });
+    };
+
+    childProcess.stdout.on('data', onData);
+
     childProcess.on('end', () => {
         res.send(outputBuffer);
+        return childProcess.stdout.off('data', onData); // remove listener from this request so next response works
     });
 });
 

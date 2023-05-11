@@ -28,9 +28,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.use(
-    cors({
-        origin: 'http://localhost:3000',
-    })
+    cors()
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -81,7 +79,17 @@ app.post('/autogpt-question', async(req, res) => {
     childProcess.stdin.write(question + '\n');
     let outputBuffer = '';
     childProcess.stdout.on('data', (data) => {
-        outputBuffer += data.toString();
+        if (data.indexOf(`Enter 'y' to authorise command`) !== -1) {
+            return res.send(`THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}`);
+        }
+
+        if (!data.toString().includes('/ Thinking...') &&
+            !data.toString().includes('| Thinking...') &&
+            !data.toString().includes('\\ Thinking...') &&
+            !data.toString().includes('- Thinking...')
+        ) {
+            outputBuffer += data.toString().replace(/\[\d+m/g, '');
+        }
     });
     childProcess.on('end', () => {
         res.send(outputBuffer);

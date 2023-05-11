@@ -1,15 +1,10 @@
-const os = require('os');
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
 const startAutoGPT = () => {
     process.chdir('../Auto-GPT');
 
-    const dockerCmd = 'docker';
-    let dockerArgs = ['run', '--rm', 'my-docker-image', 'sh', '/app/run.sh'];
-
-    if (os.platform() === 'win32') {
-        dockerArgs = ['run', '--rm', 'my-docker-image', 'cmd', '/c', '.\\run.bat'];
-    }
+    const dockerCmd = 'docker-compose';
+    const dockerArgs = ['-f', 'docker-compose.yml', 'run', '--rm', 'auto-gpt'];
 
     const childProcess = spawn(dockerCmd, dockerArgs);
 
@@ -30,4 +25,4 @@ const startAutoGPT = () => {
     return childProcess;
 }
 
-module.exports = startAutoGPT;
+export default startAutoGPT;

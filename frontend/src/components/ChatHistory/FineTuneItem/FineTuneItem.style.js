@@ -9,9 +9,12 @@ export const ItemWrapper = styled.li `
 	justify-content: space-between;
 	padding: 10px 7px;
 	border-radius: 7px;
+	background-color: ${({ selected }) =>
+		selected ? '#343541' : ''};
 
 	&:hover {
-		background-color: #525050;
+		background-color: ${({ selected }) =>
+		selected ? '#343541' : '#525050'};
 	}
 `;
 

@@ -3,6 +3,8 @@ import openai from './index.js';
 
 export async function askQuestion(chatId, question, messageId) {
     try {
+        console.log(question);
+
         const dir = './chats';
         if (!existsSync(dir)) {
             mkdirSync(dir);
@@ -17,8 +19,6 @@ export async function askQuestion(chatId, question, messageId) {
             const fileParsed = JSON.parse(file);
             messages = fileParsed.messages;
         }
-
-        console.log(question);
 
         const idxOfMessage = messages.findIndex(message => message.messageId === messageId);
         let completion;
@@ -35,7 +35,7 @@ export async function askQuestion(chatId, question, messageId) {
                 // model: 'gpt-4-32k',
                 // prompt: question,
                 // max_tokens: 1000,
-                messages: messages.map(({ role, content }) => { role, content })
+                messages: messages.map(({ role, content }) => ({ role, content }))
             });
 
             console.log(completion.data.choices[0].message.content);
@@ -57,7 +57,7 @@ export async function askQuestion(chatId, question, messageId) {
                 // model: 'gpt-4-32k',
                 // prompt: question,
                 // max_tokens: 1000,
-                messages: messages.slice(0, idxOfMessage + 1).map(({ role, content }) => { role, content })
+                messages: messages.slice(0, idxOfMessage + 1).map(({ role, content }) => ({ role, content }))
             });
 
             console.log(completion.data.choices[0].message.content);
@@ -84,7 +84,7 @@ export async function askQuestion(chatId, question, messageId) {
 
         return response.trim();
     } catch (err) {
-        console.log('error: ', err);
+        // console.log('error: ', err);
     }
 }
 
@@ -110,7 +110,7 @@ export async function askQuestionTuned(chatId, model, prompt, messageId) {
         if (idxOfMessage === -1) { // new message
             messages.push({
                 role: 'user',
-                content: question,
+                content: prompt,
                 messageId
             });
 
@@ -129,7 +129,7 @@ export async function askQuestionTuned(chatId, model, prompt, messageId) {
         } else { // edit existing message
             messages[idxOfMessage] = {
                 ...messages[idxOfMessage],
-                content: question
+                content: prompt
             }
 
             response = await openai.createCompletion({

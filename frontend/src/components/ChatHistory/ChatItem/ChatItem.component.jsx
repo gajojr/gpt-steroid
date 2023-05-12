@@ -8,7 +8,7 @@ import {
 	TrashIcon,
 } from './ChatItem.style';
 import { useDispatch } from 'react-redux';
-import { selectChatId } from '../../../redux/reducers/Chat';
+import { selectChatId, selectChatType } from '../../../redux/reducers/Chat';
 import db from '../../../db';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -62,8 +62,12 @@ const ChatItem = ({ chat, setChats, chats }) => {
 
 	return (
 		<ItemWrapper
+			chatType={chat.chatType}
 			active={activeChatId === chat.id}
-			onClick={() => dispatch(selectChatId(chat.id))}
+			onClick={() => {
+				dispatch(selectChatId(chat.id));
+				dispatch(selectChatType(chat.chatType));
+			}}
 		>
 			<ChatIcon />
 			<ChatName

@@ -61,19 +61,6 @@ app.post('/ask-question-tuned', async(req, res) => {
     res.send(answer);
 });
 
-app.delete('/chat', async(req, res) => {
-    unlink(`./chats/chat_${req.body.chatId}.json`, (err) => {
-        if (err) throw err;
-        console.log('File deleted!');
-    });
-    res.json({ status: 'success' });
-});
-
-app.delete('/fine-tune', async(req, res) => {
-    await deleteFineTune(req.body.model, req.body.fileId);
-    res.json({ status: 'success' });
-});
-
 app.post('/autogpt-question', async(req, res) => {
     const { chatId, question, messageId } = req.body;
 
@@ -131,6 +118,19 @@ app.post('/autogpt-question', async(req, res) => {
         res.send(outputBuffer);
         return childProcess.stdout.off('data', onData); // remove listener from this request so next response works
     });
+});
+
+app.delete('/chat', async(req, res) => {
+    unlink(`./chats/chat_${req.body.chatId}.json`, (err) => {
+        if (err) throw err;
+        console.log('File deleted!');
+    });
+    res.json({ status: 'success' });
+});
+
+app.delete('/fine-tune', async(req, res) => {
+    await deleteFineTune(req.body.model, req.body.fileId);
+    res.json({ status: 'success' });
 });
 
 app.listen(8000, () => {

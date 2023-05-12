@@ -14,6 +14,7 @@ import {
 } from './QuestionMessage.style';
 import db from '../../../db';
 import axios from 'axios';
+import { store } from '../../../redux/store';
 
 const QuestionMessage = ({ chatId, message, answerLoading, setMessages }) => {
 	const questionInputRef = useRef(null);
@@ -32,15 +33,31 @@ const QuestionMessage = ({ chatId, message, answerLoading, setMessages }) => {
 		const question = questionInputRef.current.innerText;
 
 		await db.messages.update(message.id, {
-			messageContent: question,
+			messageContent: question
 		});
 
-		const answer = await axios.post(
-			`${process.env.REACT_APP_SERVER_URL}/ask-question`,
-			{
-				question,
-			}
-		);
+		let answer;
+		if (store.getState().fineTune.currentFineTunedModel) {
+			answer = await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/ask-question-tuned`,
+				{
+					chatId,
+					question,
+					model: store.getState().fineTune.currentFineTunedModel,
+					messageId: message.id
+				}
+			);
+		} else {
+			answer = await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/ask-question`,
+				{
+					question,
+					chatId,
+					messageId: message.id
+				}
+			);
+		}
+
 		await db.messages.update(message.id + 1, {
 			messageContent: answer.data,
 		});

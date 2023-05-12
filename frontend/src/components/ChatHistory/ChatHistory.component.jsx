@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
 import {
 	ChatHistoryWrapper,
 	ChatList,
@@ -10,14 +9,19 @@ import {
 	GuidesList,
 	StyledGuideLink,
 	CreateTuneLink,
+	UncheckTuneOption,
+	UncheckTuneOptionWrapper,
 } from './ChatHistory.style';
 import db, { fileEventEmitter } from '../../db';
 import ChatItem from './ChatItem/ChatItem.component';
 import FineTuneItem from './FineTuneItem/FineTuneItem.component';
 import { useSelector } from 'react-redux';
 import AddChatModal from './AddChatModal/AddChatModal.component';
+import { useDispatch } from 'react-redux';
+import { selectFineTunedModel } from '../../redux/reducers/FineTune';
 
 const ChatHistory = () => {
+	const dispatch = useDispatch();
 	const [modalVisible, setModalVisible] = useState(false);
 	const [chats, setChats] = useState([]);
 	const [fineTunes, setFineTunes] = useState([]);
@@ -89,6 +93,9 @@ const ChatHistory = () => {
 			{
 				fineTunes.length ?
 					<TunesList>
+						<UncheckTuneOptionWrapper selected={selectedTunedModel === null} onClick={() => dispatch(selectFineTunedModel(null))}>
+							<UncheckTuneOption selected={selectedTunedModel === null}>None(default output)</UncheckTuneOption>
+						</UncheckTuneOptionWrapper>
 						{fineTunes.map((fineTune) => {
 							return (
 								<FineTuneItem

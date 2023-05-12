@@ -5,6 +5,7 @@ import { BsTrash3 } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
 
 export const ItemWrapper = styled.li `
+	margin-top: 5px;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -12,6 +13,8 @@ export const ItemWrapper = styled.li `
 	justify-content: space-between;
 	padding: 10px 7px;
 	border-radius: 7px;
+	border: ${({ chatType }) =>
+		chatType === 'ChatGPT' ? '1px solid #fff' : '2px solid #082F77'};
 	background-color: ${({ active }) =>
 		active ? '#343541' : ''};
 

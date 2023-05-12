@@ -17,7 +17,7 @@ import FileUploader from './FileUploader/FileUploader.component';
 const ActiveChat = ({ chatId }) => {
 	const activeChatRef = useRef(null);
 	const textareaRef = useRef(null);
-	const [currentPromt, setCurrentPromt] = useState('');
+	const [currentPrompt, setCurrentPrompt] = useState('');
 	const [messages, setMessages] = useState([]);
 	const [isAtChatEnd, setIsAtChatEnd] = useState(true);
 
@@ -56,19 +56,29 @@ const ActiveChat = ({ chatId }) => {
 			chatId,
 			creationDate: new Date(),
 			messageType: 'question',
-			messageContent: currentPromt,
+			messageContent: currentPrompt,
 		});
 
 		const messages = await db.messages.where('chatId').equals(chatId).toArray();
 		setMessages(messages);
 
-		setCurrentPromt('');
+		setCurrentPrompt('');
 		let answer;
-		if (store.getState().fineTune.currentFineTunedModel) {
+		if (store.getState().chat.currentChatType === 'AutoGPT') {
+			answer = await axios.post(
+				`${process.env.REACT_APP_SERVER_URL}/autogpt-question`,
+				{
+					question: currentPrompt,
+					chatId,
+					messageId
+				}
+			);
+		} else if (store.getState().fineTune.currentFineTunedModel) {
+			console.log(currentPrompt);
 			answer = await axios.post(
 				`${process.env.REACT_APP_SERVER_URL}/ask-question-tuned`,
 				{
-					question: `${currentPromt}?\n\n###\n\n`,
+					question: `${currentPrompt}?\n\n###\n\n`,
 					model: store.getState().fineTune.currentFineTunedModel,
 					chatId,
 					messageId
@@ -78,7 +88,7 @@ const ActiveChat = ({ chatId }) => {
 			answer = await axios.post(
 				`${process.env.REACT_APP_SERVER_URL}/ask-question`,
 				{
-					question: currentPromt,
+					question: currentPrompt,
 					chatId,
 					messageId
 				}
@@ -135,9 +145,9 @@ const ActiveChat = ({ chatId }) => {
 				<NewQuestionInput
 					ref={textareaRef}
 					placeholder='Send a message.'
-					value={currentPromt}
+					value={currentPrompt}
 					onChange={(e) => {
-						setCurrentPromt(e.target.value);
+						setCurrentPrompt(e.target.value);
 						textareaRef.current.style.height = 'auto';
 						textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
 					}}
@@ -148,10 +158,10 @@ const ActiveChat = ({ chatId }) => {
 					}}
 				/>
 				<SubmitQuestionIcon
-					color={currentPromt.length ? '#8E8E9F' : '#5F606F'}
-					enableBackground={currentPromt.length}
+					color={currentPrompt.length ? '#8E8E9F' : '#5F606F'}
+					enableBackground={currentPrompt.length}
 					onClick={() => {
-						if (currentPromt.length) {
+						if (currentPrompt.length) {
 							addNewQuestion();
 						}
 					}}

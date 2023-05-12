@@ -142,3 +142,37 @@ export const StyledGuideLink = styled(Link)
 		text-decoration: underline;
 	}
 `;
+
+export const UncheckTuneOptionWrapper = styled.li `
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 7px;
+	border-radius: 7px;
+	background-color: ${({ selected }) =>
+		selected ? '#343541' : ''};
+
+	&:hover {
+		background-color: ${({ selected }) =>
+		selected ? '#343541' : '#525050'};
+	}
+`;
+
+export const UncheckTuneOption = styled.h4 `
+	width: 90%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-decoration: ${({ selected }) =>
+		selected ? 'underline' : 'none'};
+	margin-block-start: 0;
+	margin-block-end: 0;
+	font-weight: 400;
+	border-radius: 5px;
+
+	&:hover {
+		cursor: pointer;
+	}
+`;

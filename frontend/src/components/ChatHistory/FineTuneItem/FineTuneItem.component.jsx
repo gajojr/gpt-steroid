@@ -43,7 +43,7 @@ const FineTuneItem = ({ selected, fineTune, setFineTunes, fineTunes }) => {
 	}
 
 	return (
-		<ItemWrapper onClick={() => dispatch(selectFineTunedModel(fineTune.fineTunedModel))}>
+		<ItemWrapper selected={selected} onClick={() => dispatch(selectFineTunedModel(fineTune.fineTunedModel))}>
 			<FileName selected={selected}>
 				{fineTune.fileName}
 			</FileName>

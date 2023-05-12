@@ -6,6 +6,9 @@ const startAutoGPT = () => {
     const dockerCmd = 'docker-compose';
     const dockerArgs = ['-f', 'docker-compose.yml', 'run', '--rm', 'auto-gpt'];
 
+    // return to this directory after starting docker
+    process.chdir('../server');
+
     const childProcess = spawn(dockerCmd, dockerArgs);
 
     childProcess.stdout.on('data', (data) => {

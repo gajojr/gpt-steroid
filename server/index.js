@@ -10,7 +10,7 @@ import {
 } from './openai/fineTunning.js';
 import startAutoGPT from './autogpt.js';
 
-const childProcess = startAutoGPT();
+let childProcess;
 
 const app = express();
 const storage = multer.diskStorage({
@@ -64,6 +64,10 @@ app.post('/ask-question-tuned', async(req, res) => {
 app.post('/autogpt-question', async(req, res) => {
     const { chatId, question, messageId } = req.body;
 
+    if (!childProcess) {
+        childProcess = startAutoGPT();
+    }
+
     const dir = './chats';
     if (!existsSync(dir)) {
         mkdirSync(dir);
@@ -92,14 +96,14 @@ app.post('/autogpt-question', async(req, res) => {
         if (data.indexOf(`Enter 'y' to authorise command`) !== -1) {
             messages.push({
                 role: 'assistant',
-                content: `THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}`,
+                content: `THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}\n Enter \`y\` to proceed or enter next instruction.`,
                 messageId: messageId + 1
             });
 
             const chatData = { chatId, chatType: 'ChatGPT', messages };
             const jsonData = JSON.stringify(chatData);
             writeFileSync(`./chats/chat_${chatId}.json`, jsonData);
-            res.send(`THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}`);
+            res.send(`THOUGHTS: ${outputBuffer.split('THOUGHTS:')[1].trim()}\n Enter \`y\` to proceed or enter next instruction.`);
             return childProcess.stdout.off('data', onData); // remove listener from this request so next response works
         }
 

@@ -3,16 +3,21 @@ import { createSlice } from '@reduxjs/toolkit';
 export const chatSlice = createSlice({
     name: 'chat',
     initialState: {
-        currentChatId: null
+        currentChatId: null,
+        currentChatType: null
     },
     reducers: {
         selectChatId: (state, action) => {
             state.currentChatId = action.payload;
+        },
+        selectChatType: (state, action) => {
+            state.currentChatType = action.payload;
         }
     }
 });
 
 export const {
-    selectChatId
+    selectChatId,
+    selectChatType
 } = chatSlice.actions;
 export default chatSlice.reducer;

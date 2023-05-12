@@ -12,6 +12,7 @@ import { selectChatId } from '../../../redux/reducers/Chat';
 import db from '../../../db';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const ChatItem = ({ chat, setChats, chats }) => {
 	const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const ChatItem = ({ chat, setChats, chats }) => {
 	const [editableChatName, setEditableChatName] = useState('');
 	const [shouldBlur, setShouldBlur] = useState(true);
 	const chatNameRef = useRef(null);
+	const activeChatId = useSelector(state => state.chat.currentChatId);
 
 	useEffect(() => {
 		if (editable && chatNameRef.current) {
@@ -59,7 +61,10 @@ const ChatItem = ({ chat, setChats, chats }) => {
 	}
 
 	return (
-		<ItemWrapper onClick={() => dispatch(selectChatId(chat.id))}>
+		<ItemWrapper
+			active={activeChatId === chat.id}
+			onClick={() => dispatch(selectChatId(chat.id))}
+		>
 			<ChatIcon />
 			<ChatName
 				ref={chatNameRef}

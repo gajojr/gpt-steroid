@@ -4,7 +4,7 @@ import { TbPencilMinus } from 'react-icons/tb';
 import { BsTrash3 } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
 
-export const ItemWrapper = styled.li`
+export const ItemWrapper = styled.li `
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -12,13 +12,16 @@ export const ItemWrapper = styled.li`
 	justify-content: space-between;
 	padding: 10px 7px;
 	border-radius: 7px;
+	background-color: ${({ active }) =>
+		active ? '#343541' : ''};
 
 	&:hover {
-		background-color: #525050;
+		background-color: ${({ active }) =>
+		active ? '#343541' : '#2A2B32'};
 	}
 `;
 
-export const ChatName = styled.h4`
+export const ChatName = styled.h4 `
 	width: 50%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -35,7 +38,7 @@ export const ChatName = styled.h4`
 	}
 `;
 
-const iconStyle = css`
+const iconStyle = css `
 	font-size: 18px;
 	color: #c5c5d2;
 
@@ -45,7 +48,8 @@ const iconStyle = css`
 	}
 `;
 
-export const ChatIcon = styled(MdOutlineChatBubbleOutline)`
+export const ChatIcon = styled(MdOutlineChatBubbleOutline)
+`
 	${iconStyle};
 
 	&:hover {
@@ -53,14 +57,17 @@ export const ChatIcon = styled(MdOutlineChatBubbleOutline)`
 	}
 `;
 
-export const PencilIcon = styled(TbPencilMinus)`
+export const PencilIcon = styled(TbPencilMinus)
+`
 	${iconStyle};
 `;
 
-export const TrashIcon = styled(BsTrash3)`
+export const TrashIcon = styled(BsTrash3)
+`
 	${iconStyle};
 `;
 
-export const TickIcon = styled(TiTick)`
+export const TickIcon = styled(TiTick)
+`
 	${iconStyle};
 `;

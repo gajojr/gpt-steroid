@@ -3,8 +3,8 @@ import { EventEmitter } from 'events';
 
 const db = new Dexie('GPT-tunner');
 
-db.version(3).stores({
-    chats: '++id, name, creationDate',
+db.version(4).stores({
+    chats: '++id, name, chatType, creationDate',
     fileUploads: '++id, fileName, fileId, tuneId, uploadDate, fineTunedModel',
     messages: '++id, chatId, creationDate, messageType, messageContent',
 });

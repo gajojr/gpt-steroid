@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import axios from 'axios';
 import Swal from 'sweetalert2';
 import {
 	ChatHistoryWrapper,
@@ -11,16 +9,16 @@ import {
 	TunesList,
 	GuidesList,
 	StyledGuideLink,
-	CreateTuneLink
+	CreateTuneLink,
 } from './ChatHistory.style';
-import { selectChatId } from '../../redux/reducers/Chat';
 import db, { fileEventEmitter } from '../../db';
 import ChatItem from './ChatItem/ChatItem.component';
 import FineTuneItem from './FineTuneItem/FineTuneItem.component';
 import { useSelector } from 'react-redux';
+import AddChatModal from './AddChatModal/AddChatModal.component';
 
 const ChatHistory = () => {
-	const dispatch = useDispatch();
+	const [modalVisible, setModalVisible] = useState(false);
 	const [chats, setChats] = useState([]);
 	const [fineTunes, setFineTunes] = useState([]);
 	const selectedTunedModel = useSelector(state => state.fineTune.currentFineTunedModel);
@@ -46,33 +44,7 @@ const ChatHistory = () => {
 	}, []);
 
 	const handleAddChatClick = () => {
-		Swal.fire({
-			title: 'Enter chat name',
-			input: 'text',
-			inputPlaceholder: 'Enter your chat name',
-			confirmButtonText: 'Create chat',
-			confirmButtonColor: '#202123',
-			showCancelButton: true,
-			cancelButtonText: 'Cancel',
-			allowOutsideClick: false,
-			inputValidator: (value) => {
-				if (!value) {
-					return 'Please enter a chat name';
-				}
-			},
-		}).then(async (result) => {
-			if (result.isConfirmed) {
-				if (!result.value?.length) {
-					return;
-				}
-				const chatId = await db.chats.add({
-					name: result.value,
-					creationDate: new Date(),
-				});
-				dispatch(selectChatId(chatId));
-				db.chats.toArray().then((chats) => setChats(chats));
-			}
-		});
+		setModalVisible(true);
 	};
 
 	return (
@@ -81,6 +53,11 @@ const ChatHistory = () => {
 				<PlusIcon />
 				<span>New chat</span>
 			</AddNewChatBtn>
+			<AddChatModal
+				setChats={setChats}
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
+			/>
 			<CreateTuneLink to='/create-fine-tune'>Create fine tune</CreateTuneLink>
 			<SectionTitle>Guides</SectionTitle>
 			<GuidesList>

@@ -52,7 +52,7 @@ const ActiveChat = ({ chatId }) => {
 	}, [chatId]);
 
 	const addNewQuestion = async () => {
-		await db.messages.add({
+		const messageId = await db.messages.add({
 			chatId,
 			creationDate: new Date(),
 			messageType: 'question',
@@ -70,7 +70,8 @@ const ActiveChat = ({ chatId }) => {
 				{
 					question: `${currentPromt}?\n\n###\n\n`,
 					model: store.getState().fineTune.currentFineTunedModel,
-					chatId
+					chatId,
+					messageId
 				}
 			);
 		} else {
@@ -78,7 +79,8 @@ const ActiveChat = ({ chatId }) => {
 				`${process.env.REACT_APP_SERVER_URL}/ask-question`,
 				{
 					question: currentPromt,
-					chatId
+					chatId,
+					messageId
 				}
 			);
 		}

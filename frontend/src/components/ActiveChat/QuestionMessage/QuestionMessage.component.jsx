@@ -86,22 +86,25 @@ const QuestionMessage = ({ chatId, message, answerLoading, setMessages }) => {
 					{message.messageContent}
 				</MessageContent>
 			</ProfileAndText>
-			{editable ? (
-				<EditOptions>
-					<SaveEditBtn onClick={updateQuestion}>Save</SaveEditBtn>
-					<CancelEditBtn onClick={() => setEditable(false)}>
-						Cancel
-					</CancelEditBtn>
-				</EditOptions>
-			) : (
-				<EditQuestion
-					disabled={editPending || answerLoading}
-					onClick={() => setEditable(true)}
-				>
-					<EditQuestionText>Edit question</EditQuestionText>
-					<EditQuestionBtn />
-				</EditQuestion>
-			)}
+			{
+				store.getState().chat.currentChatType === 'ChatGPT' ?
+					(editable ? (
+						<EditOptions>
+							<SaveEditBtn onClick={updateQuestion}>Save</SaveEditBtn>
+							<CancelEditBtn onClick={() => setEditable(false)}>
+								Cancel
+							</CancelEditBtn>
+						</EditOptions>
+					) : (
+						<EditQuestion
+							disabled={editPending || answerLoading}
+							onClick={() => setEditable(true)}
+						>
+							<EditQuestionText>Edit question</EditQuestionText>
+							<EditQuestionBtn />
+						</EditQuestion>
+					)) : null
+			}
 			{(answerLoading || editPending) && (
 				<LoadingText>Loading the answer</LoadingText>
 			)}

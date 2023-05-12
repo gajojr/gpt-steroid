@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, unlink } from 'fs';
+import { existsSync, mkdirSync, unlink, writeFileSync, readFileSync } from 'fs';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';

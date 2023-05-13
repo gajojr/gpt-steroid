@@ -9,21 +9,26 @@ Chat GPT Steroid is an enhanced version of the Chat GPT language model built on 
 - 32K token input and output
 - Local setup
 - IndexedDB data storage
+- Connection to Auto GPT for automatic prompting
 
 ## Getting Started
 
 1.  Install [Node.js](https://nodejs.org/en/)
-2.  Clone the repository from GitHub: `git clone https://github.com/gajojr/gpt-steroid.git`
-3.  Navigate to the cloned repository
-4.  Create an OpenAI API key with a paid account
-5.  Navigate to server directory, create a `.env` file and set `OPENAI_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the value of the API key from OpenAI
-6.  Navigate to server directory, create a `.env` file and set `REACT_APP_SERVER_URL`=http://localhost:8000
-7.  Run `npm install` in frontend and server to install dependencies
-8.  Run `npm run dev` from root to start the application
+2.  Install [Docker](https://www.docker.com/)
+3.  Clone the repository from GitHub: `git clone https://github.com/gajojr/gpt-steroid.git`
+4.  Navigate to the cloned repository
+5.  Clone the AutoGPT repo from root: `git clone https://github.com/Significant-Gravitas/Auto-GPT.git`
+6.  Create an OpenAI API key with a paid account
+7.  Navigate to server directory, create a `.env` file and set `OPENAI_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the value of the API key from OpenAI
+8.  Navigate to frontend directory, create a `.env` file and set `REACT_APP_SERVER_URL`=http://localhost:8000
+9.  Navigate to Auto-GPT directory and create `.env` file and set `OPENAI_API_KEY`=`YOUR_API_KEY`
+10. Run `npm install` in root
+11. Run `npm install` in frontend and server to install dependencies
+12. Start docker
+13. Run `npm run dev` from root to start the application
 
 ## Additional Features (in progress)
 
-- Connection to Auto GPT for automatic prompting
 - Access to the internet
 
 ## Contributing

@@ -125,10 +125,21 @@ app.post('/autogpt-question', async(req, res) => {
 });
 
 app.delete('/chat', async(req, res) => {
-    unlink(`./chats/chat_${req.body.chatId}.json`, (err) => {
-        if (err) throw err;
-        console.log('File deleted!');
-    });
+    try {
+        unlink(`./chats/chat_${req.body.chatId}.json`, (err) => {
+            if (err) {
+                console.error('Error deleting file:', err);
+                // Handle the error appropriately, such as sending an error response
+            } else {
+                console.log('File deleted!');
+                // File deleted successfully
+            }
+        });
+    } catch (err) {
+        console.error('Error deleting file:', err);
+        // Handle the error appropriately, such as sending an error response
+    }
+
     res.json({ status: 'success' });
 });
 

@@ -71,6 +71,9 @@ const ChatHistory = () => {
 				<li>
 					<StyledGuideLink to="/guides/large-output-guide">Large output</StyledGuideLink>
 				</li>
+				<li>
+					<StyledGuideLink to="/guides/autogpt-guide">AutoGPT</StyledGuideLink>
+				</li>
 			</GuidesList>
 			<SectionTitle>Chat History</SectionTitle>
 			{

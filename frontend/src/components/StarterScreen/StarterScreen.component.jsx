@@ -20,7 +20,7 @@ const StarterScreen = () => {
 				<Feature>Open source</Feature>
 				<Feature>Local setup</Feature>
 				<Feature>32K token output</Feature>
-				<Feature>AutoGPT self promting (In progress)</Feature>
+				<Feature>AutoGPT self promting (New)</Feature>
 				<Feature>Internet access (In progress)</Feature>
 			</FeaturesList>
 		</StarterScreenWrapper>

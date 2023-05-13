@@ -65,7 +65,7 @@ app.post('/autogpt-question', async(req, res) => {
     const { chatId, question, messageId } = req.body;
 
     if (!childProcess) {
-        childProcess = startAutoGPT();
+        childProcess = await startAutoGPT();
     }
 
     const dir = './chats';
